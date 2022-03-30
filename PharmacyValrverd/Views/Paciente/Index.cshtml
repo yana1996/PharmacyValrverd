@@ -1,0 +1,119 @@
+﻿@model List<PharmacyValrverd.Models.TableViewModels.PacienteTableViewModel>
+
+@{
+	Layout = "_Layout";
+	ViewData["Title"] = "Paciente";
+}
+
+<div class="container">
+	<div class="panel panel-info">
+		<div class="panel-heading text-center"><h4 class="panel-title">Pacientes</h4></div>
+		<div class="panel-body table-responsive trans-opacity-5">
+
+			<div class="form-group row">
+				<div class="col-4"></div>
+				<div class="col-5"></div>
+				<div class="col-3">
+					<button class="align-middle text-center form-control btn btn-primary" onclick="document.location.href='@Url.Content("~/Paciente/Create")'">
+						<span class="glyphicon glyphicon-plus" style="text-align:center"></span>Nuevo
+					</button>
+				</div>
+			</div>
+
+			<table id="tablaPacientes" class="table table-bordered table-hover">
+				<colgroup>
+					<col span="1" style="width: 10%;">
+					<col span="1" style="width: 10%;">
+					<col span="1" style="width: 10%;">
+					<col span="1" style="width: 10%;">
+					<col span="1" style="width: 10%;">
+					<col span="1" style="width: 10%;">
+					<col span="1" style="width: 10%;">
+					<col span="1" style="width: 10%;">
+					<col span="1" style="width: 10%;">
+					<col span="1" style="width: 10%;">
+					<col span="1" style="width: 5%;">
+					<col span="1" style="width: 5%;">
+				</colgroup>
+				<thead class="thead-light">
+					<tr>
+						<th scope="col">Cédula</th>
+						<th scope="col">Nombre</th>
+						<th scope="col">Primer Apellido</th>
+						<th scope="col">Segundo Apellido</th>
+						<th scope="col">Sexo</th>
+						<th scope="col">Fecha Nacimiento</th>
+						<th scope="col">Correo</th>
+						<th scope="col">Celular</th>
+						<th scope="col">Teléfono</th>
+						<th scope="col">Oficina</th>
+						<th scope="col">Editar</th>
+						<th scope="col">Eliminar</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var paciente in Model)
+					{
+						<tr>
+							<td class="align-middle">@paciente.cedula</td>
+							<td class="align-middle">@paciente.nombre</td>
+							<td class="align-middle">@paciente.primerApellido</td>
+							<td class="align-middle">@paciente.segundoApellido</td>
+							<td class="align-middle">@paciente.sexo</td>
+							<td>@paciente.fechaNacimiento.ToShortDateString()</td>
+							<td class="align-middle">@paciente.correo</td>
+							<td class="align-middle">@paciente.celular</td>
+							<td class="align-middle">@paciente.telefono</td>
+							<td class="align-middle">@paciente.oficina</td>
+
+							<td class="align-middle text-center">
+								<button type="button" value="Editar" class="btn btn-info">
+									<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+								</button>
+							</td>
+							<td class="align-middle text-center">
+								<button type="button" value="eliminar" class="btn btn-danger">
+									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+								</button>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+@*<script>
+	$(document).ready(function () {
+	$('#tablapacientes').DataTable();
+	});
+
+	function jsDelete(id) {
+	swal({
+	title: "Deseas eliminar el paciente?",
+	text: "El cambio no será revertible!",
+	icon: "warning",
+	buttons: true,
+	dangerMode: true,
+	})
+	.then((willDelete) => {
+	if (willDelete) {
+	url = "@Url.Content("~/User/Delete")" + "/" + id;
+
+	$.post(url, function (data) {
+
+	if (data == "1") {
+	swal({
+	title: "¡paciente eliminado exitosamente!",
+	icon: "success",
+	});
+	}
+	document.location.href = "@Url.Content("~/User/")";
+	});
+	} else {
+	swal("Error al eliminar!");
+	}
+	});
+
+	}
+	</script>*@

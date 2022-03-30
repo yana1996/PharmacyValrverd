@@ -1,28 +1,25 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>@ViewData["Title"] - PharmacyValrverd</title>
+        <title>@ViewData["Title"]</title>
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
         <link rel="stylesheet" href="~/css/login.css" />
+        <link rel="stylesheet" type="text/css" href="~/css/newglyphicon.css" /> 
     </head>
     <body>
         <section class='login' id='login'>
             <div class='head'>
-                <h1 class='company'>IntegraLab</h1>
+                <img src="~/resources/logo2.png" style="align-content:center;"/>
             </div>
-            <p class='msg'>Bienvenido</p>
+            
+            <p class='msg'></p>
             <div class='form'>
                 <form>
                     <input type="text" placeholder='Usuario' class='text' id='username' required><br>
                     <input type="password" placeholder='Contraseña' class='password'><br>
-                    <a href="/Home/Index" class='btn-login' id='do-login'>Login</a>
+                    <a href="/Factura/Index" class='btn-login' id='do-login'>Login <span class="glyphicon glyphicon-log-in"></span></a>
                 </form>
             </div>
         </section>

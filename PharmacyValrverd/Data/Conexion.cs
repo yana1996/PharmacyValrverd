@@ -1,5 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
+using PharmacyValrverd.Models;
+using PharmacyValrverd.Models.TableViewModels;
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 
 namespace PharmacyValrverd.Data
@@ -7,7 +10,7 @@ namespace PharmacyValrverd.Data
     public class Conexion
     {
 
-        private string conexion;
+        private readonly string conexion = "";
 
         public Conexion(IConfiguration configuration)
         {
@@ -36,7 +39,131 @@ namespace PharmacyValrverd.Data
             }
         }
 
+        public List<ProvinciaViewModel> ObtenerProvincias()
+        {
+            List<ProvinciaViewModel> listaProvincias = new List<ProvinciaViewModel>();
+
+            using (SqlConnection sql = new SqlConnection(conexion))
+            {
+
+                using (SqlCommand cmd = new SqlCommand("ObtenerProvincias", sql))
+                {
+
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    sql.Open();
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            ProvinciaViewModel prov = new ProvinciaViewModel();
+                            prov.CodigoProvincia = reader.GetInt32(0);
+                            prov.NumeroProvincia = reader.GetString(1);
+                            prov.NombreProvincia = reader.GetString(2);
+
+                            listaProvincias.Add(prov);
+                        }
+                    }
+                    reader.Close();
+                }
+            }
+
+            return listaProvincias;
+        }
+
+        //public List<ProvinciaViewModel> ObtenerCantones()
+        //{
+        //    List<ProvinciaViewModel> listaCantones = new List<ProvinciaViewModel>();
+
+        //    using (SqlConnection sql = new SqlConnection(conexion))
+        //    {
+
+        //        using (SqlCommand cmd = new SqlCommand("ObtenerCantones", sql))
+        //        {
+
+        //            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+        //            sql.Open();
+
+        //            SqlDataReader reader = cmd.ExecuteReader();
+
+        //            if (reader.HasRows)
+        //            {
+        //                while (reader.Read())
+        //                {
+        //                    ProvinciaViewModel prov = new ProvinciaViewModel();
+        //                    prov.CodigoProvincia = reader.GetInt32(0);
+        //                    prov.NumeroProvincia = reader.GetString(1);
+        //                    prov.NombreProvincia = reader.GetString(2);
+
+        //                    listaProvincias.Add(prov);
+        //                }
+        //            }
+        //            reader.Close();
+        //        }
+        //    }
+
+        //    return listaProvincias;
+        //}
+
+        public List<PacienteTableViewModel> ObtenerPacientes() 
+        {
+            List<PacienteTableViewModel> listaPacientes = new List<PacienteTableViewModel>(); 
+
+            using (SqlConnection sql = new SqlConnection(conexion))
+            {
+
+                using (SqlCommand cmd = new SqlCommand("ObtenerPacientes", sql))
+                {
+
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    sql.Open();
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            listaPacientes.Add(ArmarObjPaciente(reader));
+                        }
+                    }
+                    reader.Close();
+                }
+            }
+
+            return listaPacientes;
+        }
+
+        private PacienteTableViewModel ArmarObjPaciente(SqlDataReader reader)
+        {
+            PacienteTableViewModel paciente = new PacienteTableViewModel();
+            paciente.id = (int)reader["id"];
+            paciente.tipoId = reader["tipoId"].ToString();
+            paciente.cedula = reader["cedula"].ToString();
+            paciente.nombre = reader["nombre"].ToString();
+            paciente.primerApellido = reader["primerApellido"].ToString();
+            paciente.segundoApellido = reader["segundoApellido"].ToString();
+            paciente.sexo = reader["sexo"].ToString();
+            paciente.fechaNacimiento = (DateTime)reader["fechaNacimiento"];
+            paciente.correo = reader["correo"].ToString();
+            paciente.celular = (int)reader["celular"];
+            paciente.telefono = (int)reader["telefono"];
+            paciente.oficina = (int)reader["telOficina"];
+            paciente.ocupacion = reader["correo"].ToString();
+            paciente.lugarTrabajo = reader["correo"].ToString();
+            paciente.provincia = reader["provincia"].ToString();
+            paciente.canton = reader["canton"].ToString();
+            paciente.distrito = reader["distrito"].ToString();
+            paciente.direccion = reader["direccion"].ToString();
+            paciente.observacionGeneral = reader["observacionGeneral"].ToString();
+            paciente.observacionEspecifica = reader["observacionEspecifica"].ToString();
+
+            return paciente;
+        }
+
     }
 
-    
+
 }

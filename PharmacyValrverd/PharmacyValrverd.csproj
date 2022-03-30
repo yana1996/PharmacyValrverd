@@ -3,10 +3,18 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
+    <UserSecretsId>2cc413aa-6ad9-49c3-8314-ada9707bb8e5</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="bootstrap" Version="4.5.3" />
+    <PackageReference Include="jQuery" Version="3.6.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.15" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
   </ItemGroup>
 
@@ -15,5 +23,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Login\" />
+    <Folder Include="wwwroot\resources\" />
   </ItemGroup>
 </Project>

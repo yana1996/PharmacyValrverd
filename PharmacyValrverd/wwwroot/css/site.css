@@ -1,71 +1,137 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
-a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+﻿body {
+    /*background-image: linear-gradient(to left,#76fec3 0%,#007db5 130%);*/
+    /*Padding y eliminacion del scroll que genera el Sweetalert2 */
+    padding-right: 0 !important;
+    overflow: auto !important;
+    display: contents;
+/*    flex-direction: column;*/
+    min-height: 100vh;
+    width: 100%;
 }
 
-/* Provide sufficient contrast against white background */
-a {
-  color: #0366d6;
+fieldset {
+    border: solid gray 1px;
+    border-radius: 3px;
 }
 
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+.w-fit-content-min {
+    min-width: 100vw;
+    width: fit-content;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+#container {
+    display: flex;
+    padding: 20px;
+    margin: 0 !important;
+    min-width: 100%;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  font-size: 14px;
-}
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+/*Footer*/
+footer {
+    min-height: 50px;
+    width: 100%;
+    background-color: gray;
+    position: fixed;
+    bottom: 0;
 }
 
-.border-top {
-  border-top: 1px solid #e5e5e5;
-}
-.border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+
+footer p {
+    padding: 3px;
+    margin: 0;
+    color: white;
 }
 
-.box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+.f-general {
+    background-color: #944E97;
+    margin: 0;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
 }
 
-button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+.f-info {
+    background-color: #942D97;
+    margin: 0;
+    justify-content: center;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  position: relative;
-  min-height: 100%;
+.copyright {
+    justify-content: center;
+    text-align: center;
+    padding: 5px;
 }
 
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+.f-creadores p {
+    color: whitesmoke;
 }
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+/*Footer*/
+
+.panel {
+    background-color: #FFFFFF;
+    padding: 10px;
+    border-radius: 5px;
 }
+
+.panel-body {
+    padding: 3px;
+}
+
+.trans-opacity-0 {
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.panel .panel-heading {
+    color: dimgray;
+}
+
+.btn {
+    padding: 5px;
+}
+
+.icono {
+    display: inline-block;
+    height: auto;
+}
+
+    .icono i {
+        font-size: 40px;
+    }
+
+.select-none {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.texto-verde {
+    color: #04B45F;
+}
+
+nav.navbar ul.nav li {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-style:italic;
+}
+
+nav.navbar {
+    background-color: #AFE1F9;
+}
+
+
+/*
+36DADA azul nav
+944E97 morado
+FBBC3F amarillo
+EE96BF rosado
+78C9F1 azul
+54332A cafe
+17a2b8 azul2
+*/
