@@ -2,25 +2,28 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using PharmacyValrverd.Data;
 using PharmacyValrverd.Models.TableViewModels;
 using System.Collections.Generic;
+using System.Net;
 
 namespace PharmacyValrverd.Controllers
-{ 
+{
     public class PacienteController : Controller
     {
         private readonly IConfiguration _config;
         private readonly Conexion con;
 
-        public PacienteController(IConfiguration config) 
+        public PacienteController(IConfiguration config)
         {
             _config = config;
             con = new Conexion(_config);
         }
         // GET: PacienteController
         public ActionResult Index()
-        {            
+        {
             List<PacienteTableViewModel> list = null;
 
             list = con.ObtenerPacientes();
@@ -36,23 +39,12 @@ namespace PharmacyValrverd.Controllers
 
             List<SelectListItem> lst = new List<SelectListItem>();
 
-            foreach(var prov in listProv)
+            foreach (var prov in listProv)
             {
                 lst.Add(new SelectListItem() { Text = prov.NombreProvincia, Value = prov.NumeroProvincia });
             }
 
             ViewBag.Provincias = lst;
-
-            //var listCant = con.ObtenerProvincias();
-
-            //List<SelectListItem> lst = new List<SelectListItem>();
-
-            //foreach (var prov in listProv)
-            //{
-            //    lst.Add(new SelectListItem() { Text = prov.NombreProvincia, Value = prov.NumeroProvincia });
-            //}
-
-            //ViewBag.Provincias = lst;
 
             return View();
         }
@@ -112,6 +104,48 @@ namespace PharmacyValrverd.Controllers
             {
                 return View();
             }
+        }
+
+        public IActionResult ObtenerCantones(int provincia)
+        {
+            var listCant = con.ObtenerCantones(provincia);
+
+            var settings = new JsonSerializerSettings()
+            {
+                Converters =
+        {
+            new StringEnumConverter()
+        }
+            };
+
+            return new ContentResult()
+            {
+                StatusCode = (int)HttpStatusCode.OK,
+                ContentType = "application/json",
+                Content = JsonConvert.SerializeObject(listCant, settings)
+            };
+
+        }
+
+        public IActionResult ObtenerDistritos(int canton)
+        {
+            var listDist = con.ObtenerDistritos(canton);
+
+            var settings = new JsonSerializerSettings()
+            {
+                Converters =
+        {
+            new StringEnumConverter()
+        }
+            };
+
+            return new ContentResult()
+            {
+                StatusCode = (int)HttpStatusCode.OK,
+                ContentType = "application/json",
+                Content = JsonConvert.SerializeObject(listDist, settings)
+            };
+
         }
     }
 }

@@ -3,88 +3,364 @@
 	Layout = "_Layout";
 	ViewData["Title"] = "Registrar Paciente";
 }
+
 <div class="container">
 	<div class="panel panel-info">
-		<div class="panel-heading"><h4 class="panel-title">Registro Pacientes</h4></div>
+		<div class="panel-heading"><h4 class="panel-title text-center">Registro Pacientes</h4></div>
 		<div class="panel-body">
-			<div class="form-body form-horizontal">
-				<div class="form-group row">
 
-					<div class="form-group row">
-							<label class="col-6 control-label">Tipo Ide:</label>
-							<div class="col-8">
-								<select id="cmbTipo" class="form-control">
-									<option value="N">Nacional</option>
-									<option value="E">Extranjero</option>
-								</select>
-							</div>
-						</div>
+			<div class="panel panel-default">
+				<div class="panel-heading"><h5 class="panel-title">Datos Personales</h5></div>
+				<div class="panel-body">
+
+					<div class="form-body form-horizontal">
 
 						<div class="form-group row">
-							<label class="col-6 control-label">Cédula:</label>
-							<div class="col-8">
-								<input class="form-control"/>
-							</div>
-							@*<div class="col-2">
-								<button class="form-control btn btn-info"><span class="glyphicon glyphicon-search" style="text-align:center"></span> </button>
-							</div>*@
-						</div>
 
-						<div class="form-group row">
-							<label class="col-6 control-label">Nombre:</label>
-							<div class="col-8">
-								<input class="form-control"/>
-							</div>
-						</div>
+							<div class="col-sm-12 col-md-12">
+								<div class="row_borde row form-group">
 
-						<div class="form-group row">
-							<label class="col-6 control-label">1° Apellido:</label>
-							<div class="col-8">
-								<input class="form-control"/>
-							</div>
-						</div>
+									<div class="col-md-4">
+										<div class="row_borde row">
+											<label class="col-sm-2 col-md-4 control-label">Tipo Ide:</label>
+											<div class="col-sm-8 col-md-8">
+												<select id="cmbTipo" class="form-control">
+													<option value="N">Nacional</option>
+													<option value="E">Extranjero</option>
+												</select>
+											</div>
+										</div>
+									</div>
 
-						<div class="form-group row">
-							<label class="col-6 control-label">2° Apellido:</label>
-							<div class="col-8">
-								<input class="form-control"/>
-							</div>
-						</div>
+									<div class="col-md-4">
+										<div class="row_borde row">
+											<label class="col-sm-2 col-md-4 control-label">Cédula:</label>
+											<div class="col-sm-7 col-md-6">
+												<input type="text" class="form-control" />
+											</div>
+											<div class="col-sm-3 col-md-1">
+												<button class="btn btn-info" style="text-align:center; margin-left:-10px;"><span class="glyphicon glyphicon-search"></span> </button>
+											</div>
+										</div>
+									</div>
 
-						<div class="form-group row">
-							<label class="col-6 control-label">Sexo:</label>
-							<div class="col-8">
-								<select id="cmbTipo" class="form-control">
-									<option value="M">Masculino</option>
-									<option value="F">Femenino</option>
-								</select>
+								</div>
 							</div>
-						</div>
 
-						<div class="form-group row">
-							<label class="col-6 control-label">Celular:</label>
-							<div class="col-8">
-								<input class="form-control"/>
+							<div class="col-sm-12 col-md-12">
+								<div class="row_borde row form-group">
+
+									<div class="col-md-4">
+										<div class="row_borde row">
+											<label class="col-sm-2 col-md-4 control-label">Nombre:</label>
+											<div class="col-sm-8 col-md-8">
+												<input type="text" class="form-control" />
+											</div>
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<div class="row_borde row">
+											<label class="col-sm-2 col-md-4 control-label">1° Apellido:</label>
+											<div class="col-sm-8 col-md-8">
+												<input type="text" class="form-control" />
+											</div>
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<div class="row_borde row">
+											<label class="col-sm-2 col-md-4 control-label">2° Apellido:</label>
+											<div class="col-sm-8 col-md-8">
+												<input type="text" class="form-control" />
+											</div>
+										</div>
+									</div>
+
+								</div>
 							</div>
-						</div>
 
-						<div class="form-group row">
-							<label class="col-6 control-label">Teléfono:</label>
-							<div class="col-8">
-								<input class="form-control"/>
+							<div class="col-sm-12 col-md-12">
+								<div class="row_borde row form-group">
+
+									<div class="col-md-4">
+										<div class="row_borde row">
+											<label class="col-sm-2 col-md-4 control-label">Sexo:</label>
+											<div class="col-sm-8 col-md-8">
+												<select id="cmbTipo" class="form-control">
+													<option value="M">Masculino</option>
+													<option value="F">Femenino</option>
+												</select>
+											</div>
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<div class="row_borde row">
+											<label class="col-sm-2 col-md-4 control-label">Fecha Nac:</label>
+											<div class="col-sm-8 col-md-8">
+												<input type="date" class="datepicker form-control" id="FechaNacimiento" />
+											</div>
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<div class="row_borde row">
+											<label class="col-sm-2 col-md-4 control-label">Correo:</label>
+											<div class="col-sm-8 col-md-8">
+												<input type="email" class="form-control" />
+											</div>
+										</div>
+									</div>
+
+								</div>
 							</div>
-						</div>
 
-						<div class="form-group row">
-							<label class="col-6 control-label">Oficina:</label>
-							<div class="col-8">
-								<input class="form-control"/>
+							<div class="col-sm-12 col-md-12">
+								<div class="row_borde row form-group">
+
+									<div class="col-md-4">
+										<div class="row_borde row">
+											<label class="col-sm-2 col-md-4 control-label">Célular:</label>
+											<div class="col-sm-8 col-md-8">
+												<input type="number" class="form-control" id="celular" />
+											</div>
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<div class="row_borde row">
+											<label class="col-sm-2 col-md-4 control-label">Teléfono:</label>
+											<div class="col-sm-8 col-md-8">
+												<input type="number" class="form-control" id="telefono" />
+											</div>
+										</div>
+									</div>
+
+								</div>
 							</div>
-						</div>
 
+						</div>
+					</div>
 				</div>
 			</div>
+
+			<div class="panel panel-default">
+				<div class="panel-heading"><h5 class="panel-title">Domicilio</h5></div>
+				<div class="panel-body">
+
+					<div class="form-body form-horizontal">
+
+						<div class="form-group row">
+
+							<div class="col-sm-12 col-md-12">
+								<div class="row_borde row form-group">
+
+									<div class="col-md-4">
+										<div class="row_borde row">
+											<label class="col-sm-2 col-md-4 control-label">Provincia:</label>
+											<div class="col-sm-8 col-md-8">
+												@Html.DropDownListFor(x => x.NombreProvincia, ViewBag.Provincias as List<SelectListItem>, new { @id="Provincias", @class = "form-control" })
+												@Html.ValidationMessage("Provincias", new { @class = "text-danger" })
+											</div>
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<div class="row_borde row">
+											<label class="col-sm-2 col-md-4 control-label">Cantón:</label>
+											<div class="col-sm-8 col-md-8">
+												@Html.DropDownList("Cantones", new SelectList(string.Empty, "Value", "Text"), htmlAttributes: new { @id="Cantones", @class = "form-control", disabled = "disabled" })
+												@Html.ValidationMessage("Cantones", new { @class = "text-danger" })
+											</div>
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<div class="row_borde row">
+											<label class="col-sm-2 col-md-4 control-label">Distrito:</label>
+											<div class="col-sm-8 col-md-8">
+												@Html.DropDownList("Distritos", new SelectList(string.Empty, "Value", "Text"),htmlAttributes: new { @id="Distritos", @class = "form-control", disabled = "disabled" })
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+
+							<div class="col-sm-12 col-md-12">
+								<div class="row_borde row form-group">
+
+									<div class="col-md-4">
+										<div class="row_borde row">
+											<label class="col-sm-2 col-md-4 control-label">Dirección:</label>
+											<div class="col-sm-8 col-md-8">
+												<textarea class="form-control"></textarea>
+											</div>
+										</div>
+									</div>
+
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="panel panel-default">
+				<div class="panel-heading"><h5 class="panel-title">Datos Empleo</h5></div>
+				<div class="panel-body">
+
+					<div class="form-body form-horizontal">
+
+						<div class="form-group row">
+
+							<div class="col-sm-12 col-md-12">
+								<div class="row_borde row form-group">
+
+									<div class="col-md-4">
+										<div class="row_borde row">
+											<label class="col-sm-2 col-md-4 control-label">Ocupación:</label>
+											<div class="col-sm-8 col-md-8">
+												<input type="text" class="form-control" />
+											</div>
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<div class="row_borde row">
+											<label class="col-sm-2 col-md-4 control-label">Dirección:</label>
+											<div class="col-sm-8 col-md-8">
+												<textarea class="form-control"></textarea>
+											</div>
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<div class="row_borde row">
+											<label class="col-sm-2 col-md-4 control-label">Tel Oficina:</label>
+											<div class="col-sm-8 col-md-8">
+												<input type="number" class="form-control" />
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="panel panel-default">
+				<div class="panel-heading"><h5 class="panel-title">Datos Clínicos</h5></div>
+				<div class="panel-body">
+
+					<div class="form-body form-horizontal">
+
+						<div class="form-group row">
+
+							<div class="col-sm-12 col-md-12">
+								<div class="row_borde row form-group">
+
+									<div class="col-md-4">
+										<div class="row_borde row">
+											<label class="col-sm-4 col-md-4 control-label">Observación General:</label>
+											<div class="col-sm-8 col-md-8">
+												<textarea class="form-control"></textarea>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-sm-12 col-md-12">
+								<div class="row_borde row form-group">
+
+									<div class="col-md-4">
+										<div class="row_borde row">
+											<label class="col-sm-4 col-md-4 control-label">Observaciones Específicas:</label>
+											<div class="col-sm-8 col-md-8">
+												<textarea class="form-control"></textarea>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="form-body form-horizontal">
+				<div class="col-md-4">
+				</div>
+				<div class="col-md-4">
+				</div>
+				<div class="col-md-4">
+					<div class="row_borde row">
+						<div class="col-sm-4 col-md-4">
+						</div>
+						<div class="col-sm-4 col-md-4">
+							<button class="btn btn-success">Guardar <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span></button>
+						</div>
+						<div class="col-sm-4 col-md-4">
+							<button class="btn btn-warning" onclick="document.location.href='@Url.Content("~/Paciente/Index")'">Atras <span class="glyphicon glyphicon-share" aria-hidden="true"></span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+
 		</div>
 	</div>
 </div>
+
+@section scripts {
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+<script>
+	$(document).ready(function () {
+
+		$("#Provincias").change(function () {
+
+			$("#Cantones").empty();
+			$("#Cantones").attr("disabled", false);
+
+			$.getJSON('/Paciente/ObtenerCantones', { provincia: $('#Provincias').val() },
+				function (data) {
+
+					$.each(data, function () {
+						$("#Cantones").append('<option value='+ this.CodigoCanton + '>' + this.NombreCanton + '</option>');
+					});
+				});
+		});
+
+	});
+
+	$(document).ready(function () {
+
+		$("#Cantones").change(function () {
+
+			$("#Distritos").empty();
+			$("#Distritos").attr("disabled", false);
+			$.getJSON('/Paciente/ObtenerDistritos', { canton: $('#Cantones').val() },
+				function (data) {
+
+					$.each(data, function () {
+						$("#Distritos").append('<option value=' + this.NumeroDistrito + '>' + this.NombreDistrito + '</option>');
+					});
+				});
+		});
+
+	});
+
+</script>
+
+}
 

@@ -73,39 +73,77 @@ namespace PharmacyValrverd.Data
             return listaProvincias;
         }
 
-        //public List<ProvinciaViewModel> ObtenerCantones()
-        //{
-        //    List<ProvinciaViewModel> listaCantones = new List<ProvinciaViewModel>();
+		public List<CantonViewModel> ObtenerCantones(int provincia)
+		{
+			List<CantonViewModel> listaCantones = new List<CantonViewModel>();
 
-        //    using (SqlConnection sql = new SqlConnection(conexion))
-        //    {
+			using (SqlConnection sql = new SqlConnection(conexion))
+			{
 
-        //        using (SqlCommand cmd = new SqlCommand("ObtenerCantones", sql))
-        //        {
+				using (SqlCommand cmd = new SqlCommand("ObtenerCantones", sql))
+				{
 
-        //            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-        //            sql.Open();
+					cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@provincia", provincia);
+					sql.Open();
 
-        //            SqlDataReader reader = cmd.ExecuteReader();
+					SqlDataReader reader = cmd.ExecuteReader();
 
-        //            if (reader.HasRows)
-        //            {
-        //                while (reader.Read())
-        //                {
-        //                    ProvinciaViewModel prov = new ProvinciaViewModel();
-        //                    prov.CodigoProvincia = reader.GetInt32(0);
-        //                    prov.NumeroProvincia = reader.GetString(1);
-        //                    prov.NombreProvincia = reader.GetString(2);
+					if (reader.HasRows)
+					{
+						while (reader.Read())
+						{
+                            CantonViewModel cant = new CantonViewModel();
+                            cant.CodigoCanton = reader.GetInt32(0);
+                            cant.CodigoProvincia = reader.GetInt32(1);
+                            cant.NumeroCanton = reader.GetString(2);
+                            cant.NombreCanton = reader.GetString(3);
 
-        //                    listaProvincias.Add(prov);
-        //                }
-        //            }
-        //            reader.Close();
-        //        }
-        //    }
+                            listaCantones.Add(cant);
+						}
+					}
+					reader.Close();
+				}
+			}
 
-        //    return listaProvincias;
-        //}
+			return listaCantones;
+		}
+
+        public List<DistritoViewModel> ObtenerDistritos(int canton)
+        {
+            List<DistritoViewModel> listaDistritos = new List<DistritoViewModel>();
+
+            using (SqlConnection sql = new SqlConnection(conexion))
+            {
+
+                using (SqlCommand cmd = new SqlCommand("ObtenerDistrito", sql))
+                {
+
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@canton", canton);
+                    sql.Open();
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            DistritoViewModel dist = new DistritoViewModel();
+                            dist.CodigoDistrito = reader.GetInt32(0);
+                            dist.CodigoCanton = reader.GetInt32(1);
+                            dist.NumeroDistrito = reader.GetString(2);
+                            dist.NombreDistrito = reader.GetString(3);
+
+                            listaDistritos.Add(dist);
+                        }
+                    }
+                    reader.Close();
+                }
+            }
+
+            return listaDistritos;
+        }
 
         public List<PacienteTableViewModel> ObtenerPacientes() 
         {

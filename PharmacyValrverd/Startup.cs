@@ -52,7 +52,7 @@ namespace PharmacyValrverd
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Login}/{action=Index}/{id?}");
+                    pattern: "{controller=Paciente}/{action=Create}/{id?}");
             });
         }
     }

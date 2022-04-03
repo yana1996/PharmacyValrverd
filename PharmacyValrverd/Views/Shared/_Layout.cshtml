@@ -4,35 +4,37 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width,initial-scale=1" />
 	<link rel="stylesheet" type="text/css" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-	<link rel="stylesheet" type="text/css" href="~/css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="~/css/site.css" />
 	<link rel="stylesheet" type="text/css" href="~/css/newglyphicon.css" />
-	
-	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" ></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	<title>IntegraLab - @ViewBag.Title</title>
 </head>
 <body>
 	<header>
-		<nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
-			<img src="~/resources/logo2.png" style="align-content:start;" />
-			<div class="container">
-				<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-					<ul class="navbar-nav flex-grow-1">
-						<li class="nav-item">
-							<a class="nav-link text-gray" asp-area="" asp-controller="Factura" asp-action="Index">Factura</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link text-gray" asp-area="" asp-controller="Paciente" asp-action="Index">Paciente</a>
-						</li>
-					</ul>
-					<ul class="navbar-nav navbar-right">
-						<li class="nav-item">
-							<a class="nav-link text-gray" href="/Login/Index">Salir <span class="glyphicon glyphicon-log-out"/></a>
-						</li>
-					</ul>
-				</div>
+		<nav class="navbar navbar-expand" role="navigation">
+			<img src="~/resources/logo2.png" style="align-content:start;" onclick="document.location.href='@Url.Content("~/Factura/Index")'" />
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" datatoggle="collapse" data-target=".navbar-collapse">
+					<span class="glyphicon glyphicon-menu-hamburger"></span>
+				</button>			
+			</div>
+
+			<div class = "navbar-collapse collapse">
+				<ul class="navbar-nav">
+					<li class="nav-item active">
+						<a class="nav-link" href="/Factura/Index">Factura <span class="glyphicon glyphicon-file"></span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/Paciente/Index">Paciente <span class="glyphicon glyphicon-user" /></a>
+					</li>
+				</ul>
+				<ul class="navbar-nav navbar-right">
+					<li class="nav-item">
+						<a class="nav-link " href="/Login/Index">Salir <span class="glyphicon glyphicon-log-out" /></a>
+					</li>
+				</ul>
 			</div>
 		</nav>
 	</header>
@@ -45,8 +47,8 @@
 
 	</div>
 
-	<footer class="border-top footer text-muted">
+	@*	<footer class="border-top footer text-muted">
 		<div class="container"><p>&copy; @DateTime.Now.Year - IntegraLab</p></div>
-	</footer>
+		</footer>*@
 </body>
 </html>

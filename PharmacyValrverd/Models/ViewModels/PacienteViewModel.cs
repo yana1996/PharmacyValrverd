@@ -80,17 +80,14 @@ namespace PharmacyValrverd.Models
         [Display(Name = "Distrito")]
         public string Distrito { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "La dirección no puede estar vacio.")]
         [StringLength(20, ErrorMessage = "El {0} debe tener al menos {1} caracteres", MinimumLength = 1)]
         [Display(Name = "Dirección")]
         public string Direccion { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "La observacion general no puede estar vacio.")]
         [StringLength(20, ErrorMessage = "El {0} debe tener al menos {1} caracteres", MinimumLength = 1)]
         [Display(Name = "Observación General")]
         public string observacionGeneral { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "La observacion específica no puede estar vacio.")]
         [StringLength(20, ErrorMessage = "El {0} debe tener al menos {1} caracteres", MinimumLength = 1)]
         [Display(Name = "Observación Específica")]
         public string observacionEspecifica { get; set; } 
