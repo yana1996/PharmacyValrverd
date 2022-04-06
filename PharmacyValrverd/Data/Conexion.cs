@@ -186,22 +186,138 @@ namespace PharmacyValrverd.Data
             paciente.sexo = reader["sexo"].ToString();
             paciente.fechaNacimiento = (DateTime)reader["fechaNacimiento"];
             paciente.correo = reader["correo"].ToString();
-            paciente.celular = (int)reader["celular"];
-            paciente.telefono = (int)reader["telefono"];
-            paciente.oficina = (int)reader["telOficina"];
-            paciente.ocupacion = reader["correo"].ToString();
-            paciente.lugarTrabajo = reader["correo"].ToString();
-            paciente.provincia = reader["provincia"].ToString();
-            paciente.canton = reader["canton"].ToString();
-            paciente.distrito = reader["distrito"].ToString();
+            paciente.celular = reader["celular"].ToString();
+            paciente.telefono = reader["telefono"].ToString();
+            paciente.oficina = reader["telOficina"].ToString();
+            paciente.ocupacion = reader["ocupacion"].ToString();
+            paciente.lugarTrabajo = reader["lugarTrabajo"].ToString();
+            paciente.nomProvincia = reader["provincia"].ToString();
+            paciente.nomCanton = reader["canton"].ToString();
+            paciente.nomDistrito = reader["distrito"].ToString();
             paciente.direccion = reader["direccion"].ToString();
-            paciente.observacionGeneral = reader["observacionGeneral"].ToString();
-            paciente.observacionEspecifica = reader["observacionEspecifica"].ToString();
 
             return paciente;
         }
 
-    }
+        public string RegistrarPacientes(PacienteTableViewModel paciente)
+        {
+            var valor = "0";
+            
+            try
+            {
+                using (SqlConnection sql = new SqlConnection(conexion))
+                {
+                    using (SqlCommand cmd = new SqlCommand("RegistrarPacientes", sql))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.Add(new SqlParameter("@tipoId", paciente.tipoId));
+                        cmd.Parameters.Add(new SqlParameter("@cedula", paciente.cedula));
+                        cmd.Parameters.Add(new SqlParameter("@nombre", paciente.nombre));
+                        cmd.Parameters.Add(new SqlParameter("@primerApellido", paciente.primerApellido));
+                        cmd.Parameters.Add(new SqlParameter("@segundoApellido", paciente.segundoApellido));
+                        cmd.Parameters.Add(new SqlParameter("@sexo", paciente.sexo));
+                        cmd.Parameters.Add(new SqlParameter("@fechaNacimiento", paciente.fechaNacimiento));
+                        cmd.Parameters.Add(new SqlParameter("@correo", paciente.correo));
+                        cmd.Parameters.Add(new SqlParameter("@celular", paciente.celular));
+                        cmd.Parameters.Add(new SqlParameter("@telefono", paciente.telefono));
+                        cmd.Parameters.Add(new SqlParameter("@telOficina", paciente.oficina));
+                        cmd.Parameters.Add(new SqlParameter("@ocupacion", paciente.ocupacion));
+                        cmd.Parameters.Add(new SqlParameter("@lugarTrabajo", paciente.lugarTrabajo));
+                        cmd.Parameters.Add(new SqlParameter("@provincia", paciente.provincia));
+                        cmd.Parameters.Add(new SqlParameter("@canton", paciente.canton));
+                        cmd.Parameters.Add(new SqlParameter("@distrito", paciente.distrito));
+                        cmd.Parameters.Add(new SqlParameter("@direccion", paciente.direccion));
+                        
+                        sql.Open();
 
+                        SqlDataReader reader = cmd.ExecuteReader();
+
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                               valor  = reader.GetInt32(0).ToString();
+                            }
+                        }
+                        reader.Close();
+
+                        return valor;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                valor = ex.Message;
+                return valor;
+            }
+        }
+
+        public string EliminarPacientes(int id)
+        {
+            var valor = "0";
+
+            try
+            {
+                using (SqlConnection sql = new SqlConnection(conexion))
+                {
+                    using (SqlCommand cmd = new SqlCommand("EliminarPaciente", sql))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.Add(new SqlParameter("@id", id));
+
+                        sql.Open();
+
+                        SqlDataReader reader = cmd.ExecuteReader();
+
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                valor = reader.GetInt32(0).ToString();
+                            }
+                        }
+                        reader.Close();
+
+                        return valor;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                valor = ex.Message;
+                return valor;
+            }
+
+        }
+
+        public PacienteTableViewModel ObtenerPacientesId(int id)
+        {
+            PacienteTableViewModel paciente = new PacienteTableViewModel();
+
+            using (SqlConnection sql = new SqlConnection(conexion))
+            {
+                using (SqlCommand cmd = new SqlCommand("ObtenerPacientesId", sql))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@id", id));
+
+                    sql.Open();
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                           paciente = ArmarObjPaciente(reader);
+                        }
+                    }
+                    reader.Close();
+                }
+            }
+
+            return paciente;
+        }
+    }
 
 }

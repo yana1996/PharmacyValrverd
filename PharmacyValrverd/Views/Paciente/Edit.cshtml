@@ -1,24 +1,22 @@
-﻿@model PharmacyValrverd.Models.PacienteViewModel
-
+﻿@model PharmacyValrverd.Models.EditPacienteViewModel
 @{
 	Layout = "_Layout";
-	ViewData["Title"] = "Registrar Paciente";
-}
-
-@section scripts {
-
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
-<script src="~/js/CreatePaciente.js"></script>
+	ViewData["Title"] = "Editar Paciente";
 }
 
 <div class="container">
 	<div class="panel panel-info">
-		<div class="panel-heading"><h4 class="panel-title text-center">Registro Pacientes</h4></div>
+		<div class="panel-heading"><h4 class="panel-title text-center">Modificar Pacientes</h4></div>
 		<div class="panel-body">
-			@using (Html.BeginForm("RegistrarPaciente", "Paciente", FormMethod.Post, htmlAttributes: new { @id = "formCreate" }))
+
+			<div class="col-sm-4 col-md-4">
+				<button class="btn btn-warning" onclick="document.location.href='@Url.Content("~/Paciente/Index")'">Atras <span class="glyphicon glyphicon-share" aria-hidden="true"></span></button>
+			</div>
+
+			@using (Html.BeginForm("Edit", "Paciente", FormMethod.Post, new { role = "form", enctype = "multipart / form - data", @class = "" }))
 			{
 				@Html.AntiForgeryToken()
+
 				@Html.ValidationMessage("error", new { @class = "text-danger" })
 
 				<div class="panel panel-default">
@@ -32,25 +30,25 @@
 								<div class="col-sm-12 col-md-12">
 									<div class="row_borde row form-group">
 
-										<div class="col-md-4">
+										@*										<div class="col-md-4">
 											<div class="row_borde row">
-												@Html.LabelFor(d => d.TipoId, new { @class="col-sm-2 col-md-4 control-label"})
-												<div class="col-sm-8 col-md-8">
-													@Html.DropDownListFor(d => d.TipoId, ViewBag.Tipo as List<SelectListItem>, new { @class = "form-control" })
-												</div>
+											@Html.LabelFor(d => d.TipoId, new { @class="col-sm-2 col-md-4 control-label"})
+											<div class="col-sm-8 col-md-8">
+											@Html.DropDownListFor(d => d.TipoId, ViewBag.Tipo as List<SelectListItem>, new { @class = "form-control" })
 											</div>
-										</div>
+											</div>
+											</div>*@
 
 										<div class="col-md-4">
 											<div class="row_borde row">
 												@Html.LabelFor(d => d.Cedula, new { @class="col-sm-2 col-md-4 control-label"})
-												<div class="col-sm-7 col-md-6">
+												<div class="col-sm-8 col-md-8">
 													@Html.TextBoxFor(d => d.Cedula, new { @class = "form-control" })
 													@Html.ValidationMessage("Cedula", new { @class = "text-danger" })
 												</div>
-												<div class="col-sm-3 col-md-1">
+												@*												<div class="col-sm-3 col-md-1">
 													<button class="btn btn-info" style="text-align:center; margin-left:-10px;"><span class="glyphicon glyphicon-search"></span> </button>
-												</div>
+													</div>*@
 											</div>
 										</div>
 
@@ -102,8 +100,8 @@
 												<div class="col-sm-8 col-md-8">
 													@Html.RadioButtonFor(d => d.Sexo, "M", new { @class = "radio-inline", @checked = "true" })<span>Masculino</span>
 													@Html.RadioButtonFor(d => d.Sexo, "F", new { @class = "radio-inline" })<span>Femenino</span>
-													@*@Html.DropDownListFor(d => d.Sexo, ViewBag.Sexo as List<SelectListItem>, new { @class = "form-control" })*@
-													@Html.ValidationMessage("Sexo", new { @class = "text-danger" })
+													@*@Html.DropDownListFor(d => d.Sexo, ViewBag.Sexo as List<SelectListItem>, new { @class = "form-control" })
+														@Html.ValidationMessage("Sexo", new { @class = "text-danger" })*@
 												</div>
 											</div>
 										</div>
@@ -122,7 +120,7 @@
 												@Html.LabelFor(d => d.Correo, new { @class="col-sm-2 col-md-4 control-label"})
 												<div class="col-sm-8 col-md-8">
 													@Html.TextBoxFor(d => d.Correo, new { @class = "form-control" })
-													@Html.ValidationMessage("Correo Electrónico", new { @class = "text-danger" })
+													@Html.ValidationMessage("Correo Electronico", new { @class = "text-danger" })
 												</div>
 											</div>
 										</div>
@@ -148,7 +146,7 @@
 												@Html.LabelFor(d => d.Telefono, new { @class="col-sm-2 col-md-4 control-label"})
 												<div class="col-sm-8 col-md-8">
 													@Html.TextBoxFor(d => d.Telefono, new { @class = "form-control" })
-													@Html.ValidationMessage("Teléfono", new { @class = "text-danger" })
+													@Html.ValidationMessage("Telefono", new { @class = "text-danger" })
 												</div>
 											</div>
 										</div>
@@ -161,118 +159,121 @@
 					</div>
 				</div>
 
-				<div class="panel panel-default">
+				@*				<div class="panel panel-default">
 					<div class="panel-heading"><h5 class="panel-title">Domicilio</h5></div>
 					<div class="panel-body">
 
-						<div class="form-body form-horizontal">
+					<div class="form-body form-horizontal">
 
-							<div class="form-group row">
+					<div class="form-group row">
 
-								<div class="col-sm-12 col-md-12">
-									<div class="row_borde row form-group">
+					<div class="col-sm-12 col-md-12">
+					<div class="row_borde row form-group">
 
-										<div class="col-md-4">
-											<div class="row_borde row">
-												@Html.LabelFor(d => d.Provincia, new { @class="col-sm-2 col-md-4 control-label"})
-												<div class="col-sm-8 col-md-8">
-													@Html.DropDownListFor(d => d.Provincia, ViewBag.Provincias as List<SelectListItem>, new { @id="Provincias", @class = "form-control" })
-													@Html.ValidationMessage("Provincia", new { @class = "text-danger" })
-												</div>
-											</div>
-										</div>
-
-										<div class="col-md-4">
-											<div class="row_borde row">
-												@Html.LabelFor(d => d.Canton, new { @class="col-sm-2 col-md-4 control-label"})
-												<div class="col-sm-8 col-md-8">
-													@Html.DropDownListFor(d => d.Canton, new SelectList(string.Empty, "Value", "Text"), htmlAttributes: new { @id="Cantones", @class = "form-control", disabled = "disabled" })
-													@Html.ValidationMessage("Cantón", new { @class = "text-danger" })
-												</div>
-											</div>
-										</div>
-
-										<div class="col-md-4">
-											<div class="row_borde row">
-												@Html.LabelFor(d => d.Distrito, new { @class="col-sm-2 col-md-4 control-label"})
-												<div class="col-sm-8 col-md-8">
-													@Html.DropDownListFor(d => d.Distrito , new SelectList(string.Empty, "Value", "Text"),htmlAttributes: new { @id="Distritos", @class = "form-control", disabled = "disabled" })
-													@Html.ValidationMessage("Distrito", new { @class = "text-danger" })
-												</div>
-											</div>
-										</div>
-
-									</div>
-								</div>
-
-								<div class="col-sm-12 col-md-12">
-									<div class="row_borde row form-group">
-
-										<div class="col-md-4">
-											<div class="row_borde row">
-												@Html.LabelFor(d => d.Direccion, new { @class="col-sm-2 col-md-4 control-label"})
-												<div class="col-sm-8 col-md-8">
-													@Html.TextAreaFor(d => d.Direccion, new { @class = "form-control" })
-													@Html.ValidationMessage("Dirección", new { @class = "text-danger" })
-												</div>
-											</div>
-										</div>
-
-									</div>
-
-								</div>
-							</div>
-
-						</div>
+					<div class="col-md-4">
+					<div class="row_borde row">
+					@Html.LabelFor(d => d.Provincia, new { @class="col-sm-2 col-md-4 control-label"})
+					<div class="col-sm-8 col-md-8">
+					@Html.DropDownListFor(d => d.Provincia, ViewBag.Provincias as List<SelectListItem>, new { @id="Provincias", @class = "form-control" })
+					@Html.ValidationMessage("Provinci", new { @class = "text-danger" })
 					</div>
-				</div>
+					</div>
+					</div>
 
-				<div class="panel panel-default">
+					<div class="col-md-4">
+					<div class="row_borde row">
+					@Html.LabelFor(d => d.Canton, new { @class="col-sm-2 col-md-4 control-label"})
+					<div class="col-sm-8 col-md-8">
+					@Html.DropDownListFor(d => d.Canton, new SelectList(string.Empty, "Value", "Text"), htmlAttributes: new { @id="Cantones", @class = "form-control", disabled = "disabled" })
+					@Html.ValidationMessage("Cantón", new { @class = "text-danger" })
+					</div>
+					</div>
+					</div>
+
+					<div class="col-md-4">
+					<div class="row_borde row">
+					@Html.LabelFor(d => d.Distrito, new { @class="col-sm-2 col-md-4 control-label"})
+					<div class="col-sm-8 col-md-8">
+					@Html.DropDownListFor(d => d.Distrito , new SelectList(string.Empty, "Value", "Text"),htmlAttributes: new { @id="Distritos", @class = "form-control", disabled = "disabled" })
+					@Html.ValidationMessage("Distrito", new { @class = "text-danger" })
+					</div>
+					</div>
+					</div>
+
+					</div>
+					</div>
+
+					<div class="col-sm-12 col-md-12">
+					<div class="row_borde row form-group">
+
+					<div class="col-md-4">
+					<div class="row_borde row">
+					@Html.LabelFor(d => d.Direccion, new { @class="col-sm-2 col-md-4 control-label"})
+					<div class="col-sm-8 col-md-8">
+					@Html.TextAreaFor(d => d.Direccion, new { @class = "form-control" })
+					@Html.ValidationMessage("Dirección", new { @class = "text-danger" })
+					</div>
+					</div>
+					</div>
+
+					</div>
+
+					</div>
+					</div>
+
+					</div>
+					</div>
+					</div>*@
+
+				@*				<div class="panel panel-default">
 					<div class="panel-heading"><h5 class="panel-title">Datos Empleo</h5></div>
 					<div class="panel-body">
 
-						<div class="form-body form-horizontal">
+					<div class="form-body form-horizontal">
 
-							<div class="form-group row">
+					<div class="form-group row">
 
-								<div class="col-sm-12 col-md-12">
-									<div class="row_borde row form-group">
+					<div class="col-sm-12 col-md-12">
+					<div class="row_borde row form-group">
 
-										<div class="col-md-4">
-											<div class="row_borde row">
-												@Html.LabelFor(d => d.Ocupacion, new { @class="col-sm-2 col-md-4 control-label"})
-												<div class="col-sm-8 col-md-8">
-													@Html.TextBoxFor(d => d.Ocupacion, new { @class = "form-control" })
-												</div>
-											</div>
-										</div>
-
-										<div class="col-md-4">
-											<div class="row_borde row">
-												@Html.LabelFor(d => d.LugarTrabajo, new { @class="col-sm-2 col-md-4 control-label"})
-												<div class="col-sm-8 col-md-8">
-													@Html.TextAreaFor(d => d.LugarTrabajo, new { @class = "form-control" })
-												</div>
-											</div>
-										</div>
-
-										<div class="col-md-4">
-											<div class="row_borde row">
-												@Html.LabelFor(d => d.Oficina, new { @class="col-sm-2 col-md-4 control-label"})
-												<div class="col-sm-8 col-md-8">
-													@Html.TextBoxFor(d => d.Oficina, new { @class = "form-control" })
-												</div>
-											</div>
-										</div>
-
-									</div>
-								</div>
-
-							</div>
-
-						</div>
+					<div class="col-md-4">
+					<div class="row_borde row">
+					@Html.LabelFor(d => d.Ocupacion, new { @class="col-sm-2 col-md-4 control-label"})
+					<div class="col-sm-8 col-md-8">
+					@Html.TextBoxFor(d => d.Ocupacion, new { @class = "form-control" })
+					@Html.ValidationMessage("Ocupación", new { @class = "text-danger" })
 					</div>
-				</div>
+					</div>
+					</div>
+
+					<div class="col-md-4">
+					<div class="row_borde row">
+					@Html.LabelFor(d => d.LugarTrabajo, new { @class="col-sm-2 col-md-4 control-label"})
+					<div class="col-sm-8 col-md-8">
+					@Html.TextAreaFor(d => d.LugarTrabajo, new { @class = "form-control" })
+					@Html.ValidationMessage("Lugar Trabajo", new { @class = "text-danger" })
+					</div>
+					</div>
+					</div>
+
+					<div class="col-md-4">
+					<div class="row_borde row">
+					@Html.LabelFor(d => d.Oficina, new { @class="col-sm-2 col-md-4 control-label"})
+					<div class="col-sm-8 col-md-8">
+					@Html.TextBoxFor(d => d.Oficina, new { @class = "form-control" })
+					@Html.ValidationMessage("Oficina", new { @class = "text-danger" })
+					</div>
+					</div>
+					</div>
+
+					</div>
+					</div>
+
+					</div>
+
+					</div>
+					</div>
+					</div>*@
 
 @*				<div class="panel panel-default">
 					<div class="panel-heading"><h5 class="panel-title">Datos Clínicos</h5></div>
@@ -327,11 +328,8 @@
 						<div class="row_borde row">
 							<div class="col-sm-4 col-md-4">
 							</div>
-							<div class="col-sm-4 col-md-4">								
-								<button class="btn btn-success" id="btnGuardar">Guardar <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span></button>
-							</div>
 							<div class="col-sm-4 col-md-4">
-								<button class="btn btn-warning" onclick="document.location.href='@Url.Content("~/Paciente/Index")'">Regresar <span class="glyphicon glyphicon-share" aria-hidden="true"></span></button>
+								<input type="submit" id="btnGuardar" class="btn btn-success " value="Guardar" /><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
 							</div>
 						</div>
 					</div>
@@ -340,9 +338,3 @@
 		</div>
 	</div>
 </div>
-
-
-
-
-
-
