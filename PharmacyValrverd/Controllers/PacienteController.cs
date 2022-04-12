@@ -49,26 +49,13 @@ namespace PharmacyValrverd.Controllers
 
             ViewBag.Provincias = lst;
 
-            List<SelectListItem> cmbTipo = new List<SelectListItem>();
-
-            cmbTipo.Add(new SelectListItem() { Text = "Nacional", Value = "N" });
-            cmbTipo.Add(new SelectListItem() { Text = "Extranjero", Value = "E" });
-
-            ViewBag.Tipo = cmbTipo;
-
-            List<SelectListItem> cmbSexo = new List<SelectListItem>();
-
-            cmbSexo.Add(new SelectListItem() { Text = "Masculino", Value = "M" });
-            cmbSexo.Add(new SelectListItem() { Text = "Femenino", Value = "F" });
-
-            ViewBag.Sexo = cmbSexo;
 
             return View();
         }
 
         // POST: PacienteController/Create
         [HttpPost]
-        public JsonResult RegistrarPaciente(PacienteViewModel model)
+        public ActionResult RegistrarPaciente(PacienteViewModel model)
         {
 
             PacienteTableViewModel paciente = new PacienteTableViewModel
@@ -94,31 +81,122 @@ namespace PharmacyValrverd.Controllers
 
             string registrado = con.RegistrarPacientes(paciente);
 
-
-            return Json(registrado);
+            if (registrado == "1")
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View();
+            }
 
         }
 
-        // GET: PacienteController/Edit/5
+        // GET: MedicoController/Edit/5
         public ActionResult Edit(int id)
         {
+
             EditPacienteViewModel model = new EditPacienteViewModel();
 
-            PacienteTableViewModel paciente = new PacienteTableViewModel();
+            EditPacienteViewModel paciente = con.ObtenerPacientesId(id);
 
-            paciente = con.ObtenerPacientesId(id);
+            model.Id = paciente.Id;
+            model.TipoId = paciente.TipoId;
+            model.Cedula = paciente.Cedula;
+            model.Nombre = paciente.Nombre;
+            model.PrimerApellido = paciente.PrimerApellido;
+            model.SegundoApellido = paciente.SegundoApellido;
+            model.Sexo = paciente.Sexo;
+            model.FechaNacimiento = paciente.FechaNacimiento;
+            model.Correo = paciente.Correo;
+            model.Celular = paciente.Celular;
+            model.Telefono = paciente.Telefono;
+            model.Provincia = paciente.Provincia;
+            model.Canton = paciente.Canton;
+            model.Distrito = paciente.Distrito;
+            model.Direccion = paciente.Direccion;
+            model.Ocupacion = paciente.Ocupacion;
+            model.LugarTrabajo = paciente.LugarTrabajo;
+            model.Oficina = paciente.Oficina;
 
-            model.Cedula = paciente.cedula;
-            model.Nombre = paciente.nombre;
-            model.PrimerApellido = paciente.primerApellido;
-            model.SegundoApellido = paciente.segundoApellido;
-            model.Sexo = paciente.sexo;
-            model.FechaNacimiento = paciente.fechaNacimiento;
-            model.Correo = paciente.correo;
-            model.Celular = paciente.celular;
-            model.Telefono = paciente.telefono;
+            var listProv = con.ObtenerProvincias();
+
+            List<SelectListItem> lst = new List<SelectListItem>();
+
+            foreach (var prov in listProv)
+            {
+                lst.Add(new SelectListItem() { Text = prov.NombreProvincia, Value = prov.NumeroProvincia });
+            }
+
+            ViewBag.Provincias = lst;
+
+            var listCant = con.ObtenerCantones(model.Provincia);
+
+            List<SelectListItem> lstC = new List<SelectListItem>();
+
+            foreach (var cant in listCant)
+            {
+                lstC.Add(new SelectListItem() { Text = cant.NombreCanton, Value = cant.CodigoCanton.ToString() });
+            }
+
+            ViewBag.Cantones = lstC;
+
+            var listDist = con.ObtenerDistritos(model.Canton);
+
+            List<SelectListItem> lstD = new List<SelectListItem>();
+
+            foreach (var dist in listDist)
+            {
+                lstD.Add(new SelectListItem() { Text = dist.NombreDistrito, Value = dist.CodigoDistrito.ToString() });
+            }
+
+            ViewBag.Distritos = lstD;
 
             return View(model);
+        }
+
+        // POST: PacienteController/Edit
+        [HttpPost]
+        public ActionResult Edit(EditPacienteViewModel model)    
+        {
+            if (!ModelState.IsValid)
+            {
+
+                return View(model);
+            }
+
+            EditPacienteViewModel paciente = new EditPacienteViewModel
+            {
+                Id = model.Id,
+                TipoId = model.TipoId,
+                Cedula = model.Cedula,
+                Nombre = model.Nombre,
+                PrimerApellido = model.PrimerApellido,
+                SegundoApellido = model.SegundoApellido,
+                Sexo = model.Sexo,
+                FechaNacimiento = model.FechaNacimiento,
+                Correo = model.Correo,
+                Celular = model.Celular,
+                Telefono = model.Telefono,
+                Provincia = Convert.ToInt32(model.Provincia),
+                Canton = Convert.ToInt32(model.Canton),
+                Distrito = Convert.ToInt32(model.Distrito),
+                Direccion = model.Direccion,
+                Ocupacion = model.Ocupacion,
+                LugarTrabajo = model.LugarTrabajo,
+                Oficina = model.Oficina
+            };
+
+            string modificado = con.ModificarPacientes(paciente);
+
+            if (modificado == "1")
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View();
+            }
         }
 
 

@@ -1,0 +1,139 @@
+﻿@model List<PharmacyValrverd.Models.TableViewModels.MedicoTableViewModel>
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Médicos";
+}
+
+<div class="container">
+    <div class="panel panel-info">
+        <div class="panel-heading text-center"><h4 class="panel-title">Médicos</h4></div>
+        <div class="panel-body table-responsive trans-opacity-5">
+
+            <div class="form-group row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <div class="col-sm-2 col-md-4">
+                    </div>
+                    <div class="col-sm-5 col-md-3">
+                    </div>
+                    <div class="col-sm-5 col-md-5">
+                        <button class="align-middle text-center form-control btn btn-primary" onclick="document.location.href='@Url.Content("~/Medico/Create")'">
+                            Nuevo <span class="glyphicon glyphicon-plus" style="text-align:center"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <table id="tablaPacientes" class="table table-bordered table-hover">
+                <colgroup>
+                    <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 5%;">
+                    <col span="1" style="width: 5%;">
+                </colgroup>
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Cédula</th>
+                        <th scope="col">Número</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">1° Apellido</th>
+                        <th scope="col">2° Apellido</th>
+                        <th scope="col">Sexo</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col">Celular</th>
+                        <th scope="col">Teléfono</th>
+                        <th scope="col">Tel Oficina</th>
+                        <th scope="col">Editar</th>
+                        <th scope="col">Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var medico in Model)
+                    {
+                        <tr>
+                            <td class="align-middle">@medico.cedula</td>
+                            <td class="align-middle">@medico.numero</td>
+                            <td class="align-middle">@medico.nombre</td>
+                            <td class="align-middle">@medico.primerApellido</td>
+                            <td class="align-middle">@medico.segundoApellido</td>
+                            <td class="align-middle">@medico.sexo</td>
+                            <td class="align-middle">@medico.correo</td>
+                            <td class="align-middle">@medico.celular</td>
+                            <td class="align-middle">@medico.telefono</td>
+                            <td class="align-middle">@medico.oficina</td>
+                            <td class="align-middle text-center">
+                                <button type="button" onclick="document.location.href='@Url.Content("~/Medico/Edit/"+@medico.id)'" value="Editar" class="btn btn-info">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                </button>
+                            </td>
+                            <td class="align-middle text-center">
+                                <button type="button" onclick="jsDelete(@medico.id);" value="eliminar" class="btn btn-danger">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script>
+	function jsDelete(id) {
+				swal({
+					title: "Deseas eliminar el médico?",
+					text: "El cambio no será revertible!",
+					icon: "warning",
+					buttons: {
+				confirm: {
+					text: "Aceptar",
+					value: true,
+					visible: true,
+					className: 'btn btn-success'
+				},
+				cancel: {
+					text: "Cancelar",
+					value: false,
+					visible: true,
+					className: 'btn btn-danger'
+				}
+			}
+				})
+					.then((action) => {
+						if (action) {
+							url = "@Url.Content("~/Medico/Delete")" + "/" + id;
+
+								$.post(url, function (data) {
+
+									if (data == "1") {
+										swal({
+											title: "¡Médico eliminado exitosamente!",
+											icon: "success",
+										});
+
+										document.location.href = "@Url.Content("~/Medico/")";
+									}
+
+								});
+						} else {
+							swal("Error al eliminar!");
+						}
+					});
+
+		}
+    </script>
+}

@@ -24,8 +24,6 @@ namespace PharmacyValrverd.Controllers
 
         public IActionResult Index()
         {
-            Conexion con = new Conexion(_config);
-            con.prueba();
             return View();
         }
 

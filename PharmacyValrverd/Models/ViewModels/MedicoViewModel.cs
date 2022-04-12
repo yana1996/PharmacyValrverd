@@ -1,19 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace PharmacyValrverd.Models
+namespace PharmacyValrverd.Models.ViewModels
 {
-    public class PacienteViewModel
+    public class MedicoViewModel
     {
-        [Required]
-        [Display(Name = "Tipo Ide:")]
-        public string TipoId { get; set; }
-
         [Required(AllowEmptyStrings = false, ErrorMessage = "La cédula no puede estar vacia.")]
         [StringLength(15, ErrorMessage = "El {0} debe tener al menos {1} caracteres", MinimumLength = 1)]
         [Display(Name = "Cédula:")]
         public string Cedula { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "El nombre no puede estar vacio.")]
+        [StringLength(20, ErrorMessage = "El {0} debe tener al menos {1} caracteres", MinimumLength = 1)]
+        [Display(Name = "Número:")]
+        public string Numero { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "El nombre no puede estar vacio.")]
         [StringLength(20, ErrorMessage = "El {0} debe tener al menos {1} caracteres", MinimumLength = 1)]
@@ -33,91 +36,6 @@ namespace PharmacyValrverd.Models
         [Required]
         [Display(Name = "Sexo:")]
         public string Sexo { get; set; }
-
-        [Display(Name = "Fecha Naci:")]
-        public DateTime FechaNacimiento { get; set; }
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El correo no puede estar vacio.")]
-        [EmailAddress]
-        [Display(Name = "Correo:")]
-        public string Correo { get; set; }
-
-        [RegularExpression(@"(\d{4})(\d{2})(\d{2})", ErrorMessage = "Se requiere un número válido")]
-        [Display(Name = "Celular:")]
-        public string Celular { get; set; }
-
-        [RegularExpression(@"(\d{4})(\d{2})(\d{2})", ErrorMessage = "Se requiere un número válido")]
-        [Display(Name = "Teléfono:")]
-        public string Telefono { get; set; } 
-
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Se debe seleccionar al menos una provincia.")]
-        [Display(Name = "Provincia:")]
-        public int Provincia { get; set; }
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Se debe seleccionar al menos un cantón.")]
-        [Display(Name = "Cantón:")]
-        public int Canton { get; set; } 
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Se debe seleccionar al menos un distrito.")]
-        [Display(Name = "Distrito:")]
-        public int Distrito { get; set; }
-
-        [StringLength(150, ErrorMessage = "El {0} debe tener al menos {1} caracteres", MinimumLength = 1)]
-        [Display(Name = "Dirección:")]
-        public string Direccion { get; set; }
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "La ocupacion no puede estar vacio.")]
-        [StringLength(40, ErrorMessage = "El {0} debe tener al menos {1} caracteres", MinimumLength = 1)]
-        [Display(Name = "Ocupación:")]
-        public string Ocupacion { get; set; }
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El lugar de trabajo no puede estar vacio.")]
-        [StringLength(40, ErrorMessage = "El {0} debe tener al menos {1} caracteres", MinimumLength = 1)]
-        [Display(Name = "Dir Trabajo:")]
-
-        public string LugarTrabajo { get; set; }
-
-        [RegularExpression(@"(\d{4})(\d{2})(\d{2})", ErrorMessage = "Se requiere un número válido")]
-        [Display(Name = "Tel Oficina:")]
-        public string Oficina { get; set; }
-
-    }
-
-    public class EditPacienteViewModel 
-    {
-        public int Id { get; set; }
-
-        [Required]
-        [Display(Name = "Tipo Ide:")]
-        public string TipoId { get; set; }
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "La cédula no puede estar vacia.")]
-        [StringLength(15, ErrorMessage = "El {0} debe tener al menos {1} caracteres", MinimumLength = 1)]
-        [Display(Name = "Cédula:")]
-        public string Cedula { get; set; }
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El nombre no puede estar vacio.")]
-        [StringLength(20, ErrorMessage = "El {0} debe tener al menos {1} caracteres", MinimumLength = 1)]
-        [Display(Name = "Nombre:")]
-        public string Nombre { get; set; }
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El primer apellido no puede estar vacio.")]
-        [StringLength(20, ErrorMessage = "El {0} debe tener al menos {1} caracteres", MinimumLength = 1)]
-        [Display(Name = "1° Apellido:")]
-        public string PrimerApellido { get; set; }
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El segundo apellido no puede estar vacio.")]
-        [StringLength(20, ErrorMessage = "El {0} debe tener al menos {1} caracteres", MinimumLength = 1)]
-        [Display(Name = "2° Apellido:")]
-        public string SegundoApellido { get; set; }
-
-        [Required]
-        [Display(Name = "Sexo:")]
-        public string Sexo { get; set; }
-
-        [Display(Name = "Fecha Naci:")]
-        public DateTime FechaNacimiento { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "El correo no puede estar vacio.")]
         [EmailAddress]
@@ -132,38 +50,62 @@ namespace PharmacyValrverd.Models
         [Display(Name = "Teléfono:")]
         public string Telefono { get; set; }
 
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Se debe seleccionar al menos una provincia.")]
-        [Display(Name = "Provincia:")]
-        public int Provincia { get; set; }
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Se debe seleccionar al menos un cantón.")]
-        [Display(Name = "Cantón:")]
-        public int Canton { get; set; }
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Se debe seleccionar al menos un distrito.")]
-        [Display(Name = "Distrito:")]
-        public int Distrito { get; set; }
-
-        [StringLength(150, ErrorMessage = "El {0} debe tener al menos {1} caracteres", MinimumLength = 1)]
-        [Display(Name = "Dirección:")]
-        public string Direccion { get; set; }
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "La ocupacion no puede estar vacio.")]
-        [StringLength(40, ErrorMessage = "El {0} debe tener al menos {1} caracteres", MinimumLength = 1)]
-        [Display(Name = "Ocupación:")]
-        public string Ocupacion { get; set; }
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El lugar de trabajo no puede estar vacio.")]
-        [StringLength(40, ErrorMessage = "El {0} debe tener al menos {1} caracteres", MinimumLength = 1)]
-        [Display(Name = "Dir Trabajo:")]
-
-        public string LugarTrabajo { get; set; }
-
         [RegularExpression(@"(\d{4})(\d{2})(\d{2})", ErrorMessage = "Se requiere un número válido")]
         [Display(Name = "Tel Oficina:")]
         public string Oficina { get; set; }
 
+    }
+
+    public class EditMedicoViewModel 
+    {
+
+        public int Id { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "La cédula no puede estar vacia.")]
+        [StringLength(15, ErrorMessage = "El {0} debe tener al menos {1} caracteres", MinimumLength = 1)]
+        [Display(Name = "Cédula:")]
+        public string Cedula { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "El nombre no puede estar vacio.")]
+        [StringLength(20, ErrorMessage = "El {0} debe tener al menos {1} caracteres", MinimumLength = 1)]
+        [Display(Name = "Número:")]
+        public string Numero { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "El nombre no puede estar vacio.")]
+        [StringLength(20, ErrorMessage = "El {0} debe tener al menos {1} caracteres", MinimumLength = 1)]
+        [Display(Name = "Nombre:")]
+        public string Nombre { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "El primer apellido no puede estar vacio.")]
+        [StringLength(20, ErrorMessage = "El {0} debe tener al menos {1} caracteres", MinimumLength = 1)]
+        [Display(Name = "1° Apellido:")]
+        public string PrimerApellido { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "El segundo apellido no puede estar vacio.")]
+        [StringLength(20, ErrorMessage = "El {0} debe tener al menos {1} caracteres", MinimumLength = 1)]
+        [Display(Name = "2° Apellido:")]
+        public string SegundoApellido { get; set; }
+
+        [Required]
+        [Display(Name = "Sexo:")]
+        public string Sexo { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "El correo no puede estar vacio.")]
+        [EmailAddress]
+        [Display(Name = "Correo:")]
+        public string Correo { get; set; }
+
+        [RegularExpression(@"(\d{4})(\d{2})(\d{2})", ErrorMessage = "Se requiere un número válido")]
+        [Display(Name = "Celular:")]
+        public string Celular { get; set; }
+
+        [RegularExpression(@"(\d{4})(\d{2})(\d{2})", ErrorMessage = "Se requiere un número válido")]
+        [Display(Name = "Teléfono:")]
+        public string Telefono { get; set; }
+
+        [RegularExpression(@"(\d{4})(\d{2})(\d{2})", ErrorMessage = "Se requiere un número válido")]
+        [Display(Name = "Tel Oficina:")]
+        public string Oficina { get; set; }
 
     }
 }

@@ -1,0 +1,118 @@
+﻿@model List<PharmacyValrverd.Models.TableViewModels.PerfilExamenTableViewModel>
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Perfil/Examen";
+}
+
+<div class="container">
+    <div class="panel panel-info">
+        <div class="panel-heading text-center"><h4 class="panel-title">Perfil/Examen</h4></div>
+        <div class="panel-body table-responsive trans-opacity-5">
+
+            <div class="form-group row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <div class="col-sm-2 col-md-4">
+                    </div>
+                    <div class="col-sm-5 col-md-3">
+                    </div>
+                    <div class="col-sm-5 col-md-5">
+                        <button class="align-middle text-center form-control btn btn-primary" onclick="document.location.href='@Url.Content("~/PerfilExamen/Create")'">
+                            Nuevo <span class="glyphicon glyphicon-plus" style="text-align:center"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <table class="table table-bordered table-hover">
+                <colgroup>
+                    <col span="1" style="width: 5%;">
+                    <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 5%;">
+                    <col span="1" style="width: 5%;">
+                </colgroup>
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Número</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Editar</th>
+                        <th scope="col">Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var perfil in Model)
+                    {
+                    <tr>
+                        <td class="align-middle">@perfil.numero</td>
+                        <td class="align-middle">@perfil.tipo</td>
+                        <td class="align-middle">@perfil.descripcion</td>
+                        <td class="align-middle text-center">
+                            <button type="button" onclick="document.location.href='@Url.Content("~/PerfilExamen/Edit/"+@perfil.id)'" value="Editar" class="btn btn-info">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            </button>
+                        </td>
+                        <td class="align-middle text-center">
+                            <button type="button" onclick="jsDelete(@perfil.id);" value="eliminar" class="btn btn-danger">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script>
+	function jsDelete(id) {
+				swal({
+                    title: "Deseas eliminar el Perfil/Examen?",
+					text: "El cambio no será revertible!",
+					icon: "warning",
+					buttons: {
+				confirm: {
+					text: "Aceptar",
+					value: true,
+					visible: true,
+					className: 'btn btn-success'
+				},
+				cancel: {
+					text: "Cancelar",
+					value: false,
+					visible: true,
+					className: 'btn btn-danger'
+				}
+			}
+				})
+					.then((action) => {
+						if (action) {
+							url = "@Url.Content("~/PerfilExamen/Delete")" + "/" + id;
+
+								$.post(url, function (data) {
+
+									if (data == "1") {
+										swal({
+											title: "¡Perfil/Examen eliminado exitosamente!",
+											icon: "success",
+										});
+
+										document.location.href = "@Url.Content("~/PerfilExamen/Index")";
+									}
+
+								});
+						} else {
+							swal("Error al eliminar!");
+						}
+					});
+
+		}
+    </script>
+}

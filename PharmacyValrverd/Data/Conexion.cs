@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using PharmacyValrverd.Models;
 using PharmacyValrverd.Models.TableViewModels;
+using PharmacyValrverd.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -18,26 +19,7 @@ namespace PharmacyValrverd.Data
 
         }
 
-        public void prueba()
-        {
-
-            using (SqlConnection sql = new SqlConnection(conexion))
-            {
-
-                sql.Open();
-                SqlCommand command = new SqlCommand("SELECT * From Prueba;", sql);
-                SqlDataReader reader = command.ExecuteReader();
-
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        Console.WriteLine(reader.GetString(1));
-                    }
-                }
-                reader.Close();
-            }
-        }
+        /*LISTAS*/
 
         public List<ProvinciaViewModel> ObtenerProvincias()
         {
@@ -174,6 +156,155 @@ namespace PharmacyValrverd.Data
             return listaPacientes;
         }
 
+        public List<MedicoTableViewModel> ObtenerMedicos()
+        {
+            List<MedicoTableViewModel> listaMedicos = new List<MedicoTableViewModel>();
+
+            using (SqlConnection sql = new SqlConnection(conexion))
+            {
+
+                using (SqlCommand cmd = new SqlCommand("ObtenerMedicos", sql))
+                {
+
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    sql.Open();
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            listaMedicos.Add(ArmarObjMedico(reader));
+                        }
+                    }
+                    reader.Close();
+                }
+            }
+
+            return listaMedicos;
+        }
+
+        public List<PerfilExamenTableViewModel> ObtenerPerfiles()
+        {
+            List<PerfilExamenTableViewModel> listaMedicos = new List<PerfilExamenTableViewModel>();
+
+            using (SqlConnection sql = new SqlConnection(conexion))
+            {
+
+                using (SqlCommand cmd = new SqlCommand("ObtenerPerfiles", sql))
+                {
+
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    sql.Open();
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            listaMedicos.Add(ArmarObjPerfil(reader));
+                        }
+                    }
+                    reader.Close();
+                }
+            }
+
+            return listaMedicos;
+        }
+
+        /*LISTAS POR ID*/
+
+        public EditPacienteViewModel ObtenerPacientesId(int id)
+        {
+            EditPacienteViewModel paciente = new EditPacienteViewModel();
+
+            using (SqlConnection sql = new SqlConnection(conexion))
+            {
+                using (SqlCommand cmd = new SqlCommand("ObtenerPacientesId", sql))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@id", id));
+
+                    sql.Open();
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            paciente = ArmarObjPacienteEdit(reader);
+                        }
+                    }
+                    reader.Close();
+                }
+            }
+
+            return paciente;
+        }
+
+        public EditMedicoViewModel ObtenerMedicosId(int id)
+        {
+            EditMedicoViewModel medico = new EditMedicoViewModel();
+
+            using (SqlConnection sql = new SqlConnection(conexion))
+            {
+                using (SqlCommand cmd = new SqlCommand("ObtenerMedicosId", sql))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@id", id));
+
+                    sql.Open();
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            medico = ArmarObjMedicoEdit(reader);
+                        }
+                    }
+                    reader.Close();
+                }
+            }
+
+            return medico;
+        }
+
+        public EditPerfilExamenViewModel ObtenerPerfilId(int id)
+        {
+            EditPerfilExamenViewModel perfil = new EditPerfilExamenViewModel();
+
+            using (SqlConnection sql = new SqlConnection(conexion))
+            {
+                using (SqlCommand cmd = new SqlCommand("ObtenerPerfilId", sql))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@id", id));
+
+                    sql.Open();
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            perfil = ArmarObjPerfilEdit(reader);
+                        }
+                    }
+                    reader.Close();
+                }
+            }
+
+            return perfil;
+        }
+
+        /*ARMAR OBJETOS*/
+
         private PacienteTableViewModel ArmarObjPaciente(SqlDataReader reader)
         {
             PacienteTableViewModel paciente = new PacienteTableViewModel();
@@ -198,6 +329,93 @@ namespace PharmacyValrverd.Data
 
             return paciente;
         }
+
+        private MedicoTableViewModel ArmarObjMedico(SqlDataReader reader)
+        {
+            MedicoTableViewModel medicos = new MedicoTableViewModel();
+            medicos.id = (int)reader["id"];
+            medicos.cedula = reader["cedMedico"].ToString();
+            medicos.numero = reader["numMedico"].ToString();
+            medicos.nombre = reader["nombre"].ToString();
+            medicos.primerApellido = reader["primerApellido"].ToString();
+            medicos.segundoApellido = reader["segundoApellido"].ToString();
+            medicos.sexo = reader["sexo"].ToString();
+            medicos.correo = reader["correo"].ToString();
+            medicos.celular = reader["celular"].ToString();
+            medicos.telefono = reader["telefono"].ToString();
+            medicos.oficina = reader["telOficina"].ToString();
+
+            return medicos;
+        }
+
+        private PerfilExamenTableViewModel ArmarObjPerfil(SqlDataReader reader)
+        {
+            PerfilExamenTableViewModel perfiles = new PerfilExamenTableViewModel();
+            perfiles.id = (int)reader["id"];
+            perfiles.numero = reader["numero"].ToString();
+            perfiles.tipo = reader["tipo"].ToString();
+            perfiles.descripcion = reader["descripcion"].ToString();
+
+            return perfiles;
+        }
+
+        /*ARMAR OBJETOS EDIT*/
+
+        private EditPacienteViewModel ArmarObjPacienteEdit(SqlDataReader reader)
+        {
+            EditPacienteViewModel paciente = new EditPacienteViewModel();
+            paciente.Id = (int)reader["id"];
+            paciente.TipoId = reader["tipoId"].ToString();
+            paciente.Cedula = reader["cedula"].ToString();
+            paciente.Nombre = reader["nombre"].ToString();
+            paciente.PrimerApellido = reader["primerApellido"].ToString();
+            paciente.SegundoApellido = reader["segundoApellido"].ToString();
+            paciente.Sexo = reader["sexo"].ToString();
+            paciente.FechaNacimiento = (DateTime)reader["fechaNacimiento"];
+            paciente.Correo = reader["correo"].ToString();
+            paciente.Celular = reader["celular"].ToString();
+            paciente.Telefono = reader["telefono"].ToString();
+            paciente.Oficina = reader["telOficina"].ToString();
+            paciente.Ocupacion = reader["ocupacion"].ToString();
+            paciente.LugarTrabajo = reader["lugarTrabajo"].ToString();
+            paciente.Provincia = (int)reader["provincia"];
+            paciente.Canton = (int)reader["canton"];
+            paciente.Distrito = (int)reader["distrito"];
+            paciente.Direccion = reader["direccion"].ToString();
+
+            return paciente;
+        }
+
+        private EditMedicoViewModel ArmarObjMedicoEdit(SqlDataReader reader)
+        {
+            EditMedicoViewModel medico = new EditMedicoViewModel();
+            medico.Id = (int)reader["id"];
+            medico.Cedula = reader["cedMedico"].ToString();
+            medico.Numero = reader["numMedico"].ToString();
+            medico.Nombre = reader["nombre"].ToString();
+            medico.PrimerApellido = reader["primerApellido"].ToString();
+            medico.SegundoApellido = reader["segundoApellido"].ToString();
+            medico.Sexo = reader["sexo"].ToString();
+            medico.Correo = reader["correo"].ToString();
+            medico.Celular = reader["celular"].ToString();
+            medico.Telefono = reader["telefono"].ToString();
+            medico.Oficina = reader["telOficina"].ToString();
+
+            return medico;
+        }
+
+        private EditPerfilExamenViewModel ArmarObjPerfilEdit(SqlDataReader reader)
+        {
+            EditPerfilExamenViewModel perfiles = new EditPerfilExamenViewModel();
+            perfiles.Id = (int)reader["id"];
+            perfiles.Numero = reader["numero"].ToString();
+            perfiles.Tipo = reader["tipo"].ToString();
+            perfiles.Descripcion = reader["descripcion"].ToString();
+
+            return perfiles;
+        }
+
+        /*REGISTRAR*/
 
         public string RegistrarPacientes(PacienteTableViewModel paciente)
         {
@@ -252,6 +470,91 @@ namespace PharmacyValrverd.Data
             }
         }
 
+        public string RegistrarMedicos(MedicoTableViewModel medico)
+        {
+            var valor = "0";
+
+            try
+            {
+                using (SqlConnection sql = new SqlConnection(conexion))
+                {
+                    using (SqlCommand cmd = new SqlCommand("RegistrarMedicos", sql))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.Add(new SqlParameter("@cedula", medico.cedula));
+                        cmd.Parameters.Add(new SqlParameter("@numero", medico.numero));
+                        cmd.Parameters.Add(new SqlParameter("@nombre", medico.nombre));
+                        cmd.Parameters.Add(new SqlParameter("@primerApellido", medico.primerApellido));
+                        cmd.Parameters.Add(new SqlParameter("@segundoApellido", medico.segundoApellido));
+                        cmd.Parameters.Add(new SqlParameter("@sexo", medico.sexo));
+                        cmd.Parameters.Add(new SqlParameter("@correo", medico.correo));
+                        cmd.Parameters.Add(new SqlParameter("@celular", medico.celular));
+                        cmd.Parameters.Add(new SqlParameter("@telefono", medico.telefono));
+                        cmd.Parameters.Add(new SqlParameter("@telOficina", medico.oficina));
+
+                        sql.Open();
+
+                        SqlDataReader reader = cmd.ExecuteReader();
+
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                valor = reader.GetInt32(0).ToString();
+                            }
+                        }
+                        reader.Close();
+
+                        return valor;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                valor = ex.Message;
+                return valor;
+            }
+        }
+
+        public string RegistrarPerfiles(PerfilExamenTableViewModel perfil)
+        {
+            var valor = "0";
+
+            try
+            {
+                using (SqlConnection sql = new SqlConnection(conexion))
+                {
+                    using (SqlCommand cmd = new SqlCommand("RegistrarPerfiles", sql))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.Add(new SqlParameter("@numero", perfil.numero));
+                        cmd.Parameters.Add(new SqlParameter("@tipo", perfil.tipo));
+                        cmd.Parameters.Add(new SqlParameter("@descripcion", perfil.descripcion));
+                        sql.Open();
+
+                        SqlDataReader reader = cmd.ExecuteReader();
+
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                valor = reader.GetInt32(0).ToString();
+                            }
+                        }
+                        reader.Close();
+
+                        return valor;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                valor = ex.Message;
+                return valor;
+            }
+        }
+
+        /*ELIMINAR*/
         public string EliminarPacientes(int id)
         {
             var valor = "0";
@@ -290,34 +593,223 @@ namespace PharmacyValrverd.Data
 
         }
 
-        public PacienteTableViewModel ObtenerPacientesId(int id)
+        public string EliminarMedicos(int id)
         {
-            PacienteTableViewModel paciente = new PacienteTableViewModel();
+            var valor = "0";
 
-            using (SqlConnection sql = new SqlConnection(conexion))
+            try
             {
-                using (SqlCommand cmd = new SqlCommand("ObtenerPacientesId", sql))
+                using (SqlConnection sql = new SqlConnection(conexion))
                 {
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.Parameters.Add(new SqlParameter("@id", id));
-
-                    sql.Open();
-
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    if (reader.HasRows)
+                    using (SqlCommand cmd = new SqlCommand("EliminarMedico", sql))
                     {
-                        while (reader.Read())
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.Add(new SqlParameter("@id", id));
+
+                        sql.Open();
+
+                        SqlDataReader reader = cmd.ExecuteReader();
+
+                        if (reader.HasRows)
                         {
-                           paciente = ArmarObjPaciente(reader);
+                            while (reader.Read())
+                            {
+                                valor = reader.GetInt32(0).ToString();
+                            }
                         }
+                        reader.Close();
+
+                        return valor;
                     }
-                    reader.Close();
                 }
             }
-
-            return paciente;
+            catch (Exception ex)
+            {
+                valor = ex.Message;
+                return valor;
+            }
         }
+
+        public string EliminarPerfil(int id) 
+        {
+            var valor = "0";
+
+            try
+            {
+                using (SqlConnection sql = new SqlConnection(conexion))
+                {
+                    using (SqlCommand cmd = new SqlCommand("EliminarPerfil", sql))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.Add(new SqlParameter("@id", id));
+
+                        sql.Open();
+
+                        SqlDataReader reader = cmd.ExecuteReader();
+
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                valor = reader.GetInt32(0).ToString();
+                            }
+                        }
+                        reader.Close();
+
+                        return valor;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                valor = ex.Message;
+                return valor;
+            }
+        }
+
+        /*MODIFICAR*/
+        public string ModificarPacientes(EditPacienteViewModel paciente) 
+        {
+            var valor = "0";
+
+            try
+            {
+                using (SqlConnection sql = new SqlConnection(conexion))
+                {
+                    using (SqlCommand cmd = new SqlCommand("ModificarPacientes", sql))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.Add(new SqlParameter("@id", paciente.Id));
+                        cmd.Parameters.Add(new SqlParameter("@tipoId", paciente.TipoId));
+                        cmd.Parameters.Add(new SqlParameter("@cedula", paciente.Cedula));
+                        cmd.Parameters.Add(new SqlParameter("@nombre", paciente.Nombre));
+                        cmd.Parameters.Add(new SqlParameter("@primerApellido", paciente.PrimerApellido));
+                        cmd.Parameters.Add(new SqlParameter("@segundoApellido", paciente.SegundoApellido));
+                        cmd.Parameters.Add(new SqlParameter("@sexo", paciente.Sexo));
+                        cmd.Parameters.Add(new SqlParameter("@fechaNacimiento", paciente.FechaNacimiento));
+                        cmd.Parameters.Add(new SqlParameter("@correo", paciente.Correo));
+                        cmd.Parameters.Add(new SqlParameter("@celular", paciente.Celular));
+                        cmd.Parameters.Add(new SqlParameter("@telefono", paciente.Telefono));
+                        cmd.Parameters.Add(new SqlParameter("@telOficina", paciente.Oficina));
+                        cmd.Parameters.Add(new SqlParameter("@ocupacion", paciente.Ocupacion));
+                        cmd.Parameters.Add(new SqlParameter("@lugarTrabajo", paciente.LugarTrabajo));
+                        cmd.Parameters.Add(new SqlParameter("@provincia", paciente.Provincia));
+                        cmd.Parameters.Add(new SqlParameter("@canton", paciente.Canton));
+                        cmd.Parameters.Add(new SqlParameter("@distrito", paciente.Distrito));
+                        cmd.Parameters.Add(new SqlParameter("@direccion", paciente.Direccion));
+
+                        sql.Open();
+
+                        SqlDataReader reader = cmd.ExecuteReader();
+
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                valor = reader.GetInt32(0).ToString();
+                            }
+                        }
+                        reader.Close();
+
+                        return valor;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                valor = ex.Message;
+                return valor;
+            }
+        }
+
+        public string ModificarMedicos(EditMedicoViewModel medico)
+        {
+            var valor = "0";
+
+            try
+            {
+                using (SqlConnection sql = new SqlConnection(conexion))
+                {
+                    using (SqlCommand cmd = new SqlCommand("ModificarMedicos", sql))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.Add(new SqlParameter("@id", medico.Id));
+                        cmd.Parameters.Add(new SqlParameter("@cedula", medico.Cedula));
+                        cmd.Parameters.Add(new SqlParameter("@numero", medico.Numero));
+                        cmd.Parameters.Add(new SqlParameter("@nombre", medico.Nombre));
+                        cmd.Parameters.Add(new SqlParameter("@primerApellido", medico.PrimerApellido));
+                        cmd.Parameters.Add(new SqlParameter("@segundoApellido", medico.SegundoApellido));
+                        cmd.Parameters.Add(new SqlParameter("@sexo", medico.Sexo));
+                        cmd.Parameters.Add(new SqlParameter("@correo", medico.Correo));
+                        cmd.Parameters.Add(new SqlParameter("@celular", medico.Celular));
+                        cmd.Parameters.Add(new SqlParameter("@telefono", medico.Telefono));
+                        cmd.Parameters.Add(new SqlParameter("@telOficina", medico.Oficina));
+
+                        sql.Open();
+
+                        SqlDataReader reader = cmd.ExecuteReader();
+
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                valor = reader.GetInt32(0).ToString();
+                            }
+                        }
+                        reader.Close();
+
+                        return valor;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                valor = ex.Message;
+                return valor;
+            }
+        }
+
+        public string ModificarPerfil(EditPerfilExamenViewModel perfil) 
+        {
+            var valor = "0";
+
+            try
+            {
+                using (SqlConnection sql = new SqlConnection(conexion))
+                {
+                    using (SqlCommand cmd = new SqlCommand("ModificarPerfil", sql))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.Add(new SqlParameter("@id", perfil.Id));
+                        cmd.Parameters.Add(new SqlParameter("@numero", perfil.Numero));
+                        cmd.Parameters.Add(new SqlParameter("@tipo", perfil.Tipo));
+                        cmd.Parameters.Add(new SqlParameter("@descripcion", perfil.Descripcion));
+
+                        sql.Open();
+
+                        SqlDataReader reader = cmd.ExecuteReader();
+
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                valor = reader.GetInt32(0).ToString();
+                            }
+                        }
+                        reader.Close();
+
+                        return valor;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                valor = ex.Message;
+                return valor;
+            }
+        }
+
+
     }
 
 }

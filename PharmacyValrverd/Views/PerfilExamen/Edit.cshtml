@@ -1,0 +1,91 @@
+﻿@model PharmacyValrverd.Models.ViewModels.EditPerfilExamenViewModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Editar Perfil/Examen";
+}
+
+<div class="container">
+    <div class="panel panel-info">
+        <div class="panel-heading"><h4 class="panel-title text-center">Modificar Perfil/Examen</h4></div>
+
+        <div class="panel-body">
+
+            <div class="form-group row">
+                <div class="col-md-8"></div>
+                <div class="col-md-4">
+                    <div class="col-sm-12 col-md-8"></div>
+                    <button class="btn btn-warning" onclick="document.location.href='@Url.Content("~/PerfilExamen/Index")'">Atras <span class="glyphicon glyphicon-share" aria-hidden="true"></span></button>
+                </div>
+            </div>
+
+            @using (Html.BeginForm("Edit", "PerfilExamen", FormMethod.Post, new { role = "form", @class = "" }))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationMessage("error", new { @class = "text-danger" })
+
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h5 class="panel-title">Datos</h5></div>
+                    <div class="panel-body">
+
+                        <div class="form-body form-horizontal">
+
+                            <div class="form-group row">
+
+
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="row_borde row form-group">
+
+                                        <div class="col-md-4">
+                                            <div class="row_borde row">
+                                                @Html.LabelFor(e => e.Numero, new { @class = "col-sm-2 col-md-4 control-label" })
+                                                <div class="col-sm-8 col-md-8">
+                                                    @Html.TextBoxFor(e => e.Numero, new { @class = "form-control" })
+                                                    @Html.ValidationMessage("Número", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="row_borde row">
+                                                @Html.LabelFor(e => e.Tipo, new { @class = "col-sm-2 col-md-4 control-label" })
+                                                <div class="col-sm-8 col-md-8">
+                                                    @Html.RadioButtonFor(e => e.Tipo, "P", new { @class = "radio-inline", @id = "rbtPerfil" }) <label class="control-label" style="margin-top: 1px;"> Perfil</label>
+                                                    @Html.RadioButtonFor(e => e.Tipo, "E", new { @class = "radio-inline", @id = "rbtExamen" }) <label class="control-label" style="margin-top: 1px;"> Examen</label>
+                                                    @Html.ValidationMessage("Tipo", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="row_borde row">
+                                                @Html.LabelFor(e => e.Descripcion, new { @class = "col-sm-2 col-md-4 control-label" })
+                                                <div class="col-sm-8 col-md-8">
+                                                    @Html.TextAreaFor(e => e.Descripcion, new { @class = "form-control" })
+                                                    @Html.ValidationMessage("Descripción", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-body form-horizontal">
+                    <div class="col-md-8"></div>
+                    <div class="col-md-4">
+                        <div class="col-sm-12 col-md-8"></div>
+                        <button class="btn btn-success">Guardar <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span></button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+
