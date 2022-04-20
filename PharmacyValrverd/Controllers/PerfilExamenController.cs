@@ -48,7 +48,8 @@ namespace PharmacyValrverd.Controllers
             {
                 numero = model.Numero,
                 tipo = model.Tipo,
-                descripcion = model.Descripcion
+                descripcion = model.Descripcion,
+                precio = model.Precio
             };
 
             string registrado = con.RegistrarPerfiles(perfil);
@@ -69,12 +70,13 @@ namespace PharmacyValrverd.Controllers
         {
             EditPerfilExamenViewModel model = new EditPerfilExamenViewModel();
 
-            EditPerfilExamenViewModel medico = con.ObtenerPerfilId(id);
+            EditPerfilExamenViewModel perfil = con.ObtenerPerfilId(id);
 
-            model.Id = medico.Id;
-            model.Numero = medico.Numero;
-            model.Tipo = medico.Tipo;
-            model.Descripcion = medico.Descripcion;
+            model.Id = perfil.Id;
+            model.Numero = perfil.Numero;
+            model.Tipo = perfil.Tipo;
+            model.Descripcion = perfil.Descripcion;
+            model.Precio = perfil.Precio;
 
             return View(model);
         }
@@ -94,7 +96,8 @@ namespace PharmacyValrverd.Controllers
                 Id = model.Id,
                 Numero = model.Numero,
                 Tipo = model.Tipo,
-                Descripcion = model.Descripcion
+                Descripcion = model.Descripcion,
+                Precio = model.Precio
             };
 
             string modificado = con.ModificarPerfil(perfil);

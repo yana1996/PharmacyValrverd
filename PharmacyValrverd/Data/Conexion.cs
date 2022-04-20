@@ -4,6 +4,7 @@ using PharmacyValrverd.Models.TableViewModels;
 using PharmacyValrverd.Models.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace PharmacyValrverd.Data
@@ -355,6 +356,7 @@ namespace PharmacyValrverd.Data
             perfiles.numero = reader["numero"].ToString();
             perfiles.tipo = reader["tipo"].ToString();
             perfiles.descripcion = reader["descripcion"].ToString();
+            perfiles.precio = (decimal)reader["precio"];
 
             return perfiles;
         }
@@ -411,6 +413,7 @@ namespace PharmacyValrverd.Data
             perfiles.Numero = reader["numero"].ToString();
             perfiles.Tipo = reader["tipo"].ToString();
             perfiles.Descripcion = reader["descripcion"].ToString();
+            perfiles.Precio = (decimal)reader["precio"];
 
             return perfiles;
         }
@@ -530,6 +533,7 @@ namespace PharmacyValrverd.Data
                         cmd.Parameters.Add(new SqlParameter("@numero", perfil.numero));
                         cmd.Parameters.Add(new SqlParameter("@tipo", perfil.tipo));
                         cmd.Parameters.Add(new SqlParameter("@descripcion", perfil.descripcion));
+                        cmd.Parameters.Add(new SqlParameter("@precio", perfil.precio));
                         sql.Open();
 
                         SqlDataReader reader = cmd.ExecuteReader();
@@ -550,6 +554,75 @@ namespace PharmacyValrverd.Data
             catch (Exception ex)
             {
                 valor = ex.Message;
+                return valor;
+            }
+        }
+
+        public string RegistrarFactura(FacturaTableViewModel factura) 
+        {
+            string valor;
+
+            var idFactura = 0; 
+
+            SqlConnection con = new SqlConnection(conexion);
+            con.Open();
+
+            SqlTransaction sqlTan = con.BeginTransaction("GuardarFactura");
+
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand("RegistrarFacturaEncabezado", con))
+                {
+
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Transaction = sqlTan;
+                    cmd.Parameters.Add(new SqlParameter("@numFactura", factura.numFactura));
+                    cmd.Parameters.Add(new SqlParameter("@idPaciente", factura.idPaciente));
+                    cmd.Parameters.Add(new SqlParameter("@idMedico", factura.idMedico));
+                    cmd.Parameters.Add(new SqlParameter("@tipoFactura", factura.tipoFactura));
+                    cmd.Parameters.Add(new SqlParameter("@totalFactura", factura.totalFactura));
+                    cmd.Parameters.Add(new SqlParameter("@impuesto", factura.impuesto));
+                    cmd.Parameters.Add(new SqlParameter("@totalDeduccion", factura.totaldeduccion));
+                    cmd.Parameters.Add(new SqlParameter("@porcentaje", factura.porcentaje));
+                    cmd.Parameters.Add(new SqlParameter("@obsGeneral", factura.obsGeneral));
+                    cmd.Parameters.Add(new SqlParameter("@obsEspecifico", factura.obsEspecifico));
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            idFactura = reader.GetInt32(0);
+                        }
+                    }
+                }
+
+                foreach (var detalle in factura.detalle)
+                {
+
+                   using (SqlCommand cmdC = new SqlCommand("RegistrarFacturaDetalle", con))
+                    {
+                        cmdC.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmdC.Transaction = sqlTan;
+                        cmdC.Parameters.Add(new SqlParameter("@idFactura", idFactura));
+                        cmdC.Parameters.Add(new SqlParameter("@idPerfilExamen", detalle.idPerfilExamen));
+                        cmdC.Parameters.Add(new SqlParameter("@cantidad", detalle.cantidad));
+                        cmdC.Parameters.Add(new SqlParameter("@precioUnid", detalle.precioUni));
+                        cmdC.Parameters.Add(new SqlParameter("@total", detalle.total));
+                        cmdC.Parameters.Add(new SqlParameter("@entrega", detalle.entrega));
+
+                        cmdC.ExecuteNonQuery();
+                    }
+                }
+
+                valor = "1";
+                con.Close();
+
+                return valor;
+            }
+            catch (Exception ex)
+            {
+                valor = ex.Message;
+                con.Close();
                 return valor;
             }
         }
@@ -784,6 +857,7 @@ namespace PharmacyValrverd.Data
                         cmd.Parameters.Add(new SqlParameter("@numero", perfil.Numero));
                         cmd.Parameters.Add(new SqlParameter("@tipo", perfil.Tipo));
                         cmd.Parameters.Add(new SqlParameter("@descripcion", perfil.Descripcion));
+                        cmd.Parameters.Add(new SqlParameter("@precio", perfil.Precio));
 
                         sql.Open();
 

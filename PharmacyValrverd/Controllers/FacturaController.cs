@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using PharmacyValrverd.Data;
 using PharmacyValrverd.Models;
+using PharmacyValrverd.Models.TableViewModels;
+using PharmacyValrverd.Models.ViewModels;
 using System.Collections.Generic;
 
 namespace PharmacyValrverd.Controllers
@@ -15,12 +17,52 @@ namespace PharmacyValrverd.Controllers
         public FacturaController(IConfiguration config)
         {
             _config = config;
-             con = new Conexion(_config);
+            con = new Conexion(_config);
         }
         public ActionResult Index()
         {
 
             return View();
+        }
+
+
+        // POST: FacturaController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(FacturaViewModel model)
+        {
+
+            FacturaTableViewModel factura = new FacturaTableViewModel
+            {
+                numFactura = model.NumFactura,
+                idPaciente = model.IdPaciente,
+                idMedico = model.IdMedico,
+                tipoFactura = model.TipoFactura,
+                totalFactura = model.TotalFactura,
+                impuesto = model.Impuesto,
+                totaldeduccion = model.Deduccion,
+                porcentaje = model.Porcentaje,
+                obsGeneral = model.ObsGeneral,
+                obsEspecifico = model.ObsEspecifico
+
+            };
+
+            DetalleTableViewModel detalle = new DetalleTableViewModel
+            {
+                idPerfilExamen = model.IdPerfilExamen,
+                //cantidad = 
+            };
+
+            //string registrado = con.RegistrarPerfiles(perfil);
+
+            //if (registrado == "1")
+            //{
+            //    return RedirectToAction("Index");
+            //}
+            //else
+            //{
+                return View();
+            //}
         }
 
         //// GET: FacturaController/Details/5

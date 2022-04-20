@@ -208,6 +208,7 @@
                                         <label class="col-sm-2 col-md-6 control-label" style="text-align:start;">Descripción:</label>
 
                                         <label class="col-sm-2 col-md-2 control-label" style="text-align:start;">Cantidad:</label>
+
                                     </div>
 
                                 </div>
@@ -227,6 +228,10 @@
 
                                         <div class="col-sm-2 col-md-2">
                                             <input type="text" class="form-control" value="" />
+                                        </div>
+
+                                        <div class="col-sm-2 col-md-2">
+                                            <button class="btn btn-info" id="btnBuscar"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                                         </div>
                                     </div>
 
@@ -281,6 +286,51 @@
                 </div>
             </div>
 
+            <div class="panel panel-default">
+                <div class="panel-heading"><h5 class="panel-title">Datos Clínicos</h5></div>
+                <div class="panel-body">
+
+                    <div class="form-body form-horizontal">
+
+                        <div class="form-group row">
+
+                            @*<div class="col-sm-12 col-md-12">
+                                <div class="row_borde row form-group">
+
+                                    <div class="col-md-4">
+                                        <div class="row_borde row">
+                                            @Html.LabelFor(d => d.ObservacionGeneral, new { @class = "col-sm-2 col-md-4 control-label" })
+                                            <div class="col-sm-8 col-md-8">
+                                                @Html.TextAreaFor(d => d.ObservacionGeneral, new { @class = "form-control" })
+                                                @Html.ValidationMessage("Observación General", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 col-md-12">
+                                <div class="row_borde row form-group">
+
+                                    <div class="col-md-4">
+                                        <div class="row_borde row">
+                                            @Html.LabelFor(d => d.ObservacionEspecifica, new { @class = "col-sm-2 col-md-4 control-label" })
+                                            <div class="col-sm-8 col-md-8">
+                                                @Html.TextAreaFor(d => d.ObservacionEspecifica, new { @class = "form-control" })
+                                                @Html.ValidationMessage("Observación Específica", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>*@
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
         </div>
     </div>
 
@@ -308,7 +358,7 @@
                         <div class="mensaje" style="padding-left: 3%; font-weight: bold; font-style: oblique; display: block;">Enter en el campo nombre para realizar la búsqueda</div>
 
                     </div>
-                    
+
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="row">

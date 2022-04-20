@@ -21,6 +21,11 @@ namespace PharmacyValrverd.Models.ViewModels
         [StringLength(150, ErrorMessage = "El {0} debe tener al menos {1} caracteres", MinimumLength = 1)]
         [Display(Name = "Descripción:")]
         public string Descripcion { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "El  precio no puede estar vacio.")]
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Precio:")]
+        public Decimal Precio { get; set; } 
     }
 
     public class EditPerfilExamenViewModel
@@ -40,5 +45,10 @@ namespace PharmacyValrverd.Models.ViewModels
         [StringLength(150, ErrorMessage = "El {0} debe tener al menos {1} caracteres", MinimumLength = 1)]
         [Display(Name = "Descripción:")]
         public string Descripcion { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "El  precio no puede estar vacio.")]
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Precio:")]
+        public Decimal Precio { get; set; }
     }
 }

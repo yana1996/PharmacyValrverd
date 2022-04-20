@@ -55,12 +55,28 @@
                                             </div>
                                         </div>
 
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="row_borde row form-group">
+
                                         <div class="col-md-4">
                                             <div class="row_borde row">
                                                 @Html.LabelFor(e => e.Descripcion, new { @class = "col-sm-2 col-md-4 control-label" })
                                                 <div class="col-sm-8 col-md-8">
                                                     @Html.TextAreaFor(e => e.Descripcion, new { @class = "form-control" })
                                                     @Html.ValidationMessage("Descripción", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="row_borde row">
+                                                @Html.LabelFor(e => e.Precio, new { @class = "col-sm-2 col-md-4 control-label" })
+                                                <div class="col-sm-8 col-md-8">
+                                                    @Html.TextBoxFor(e => e.Precio, new { @class = "form-control" })
+                                                    @Html.ValidationMessage("Precio", new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                         </div>
