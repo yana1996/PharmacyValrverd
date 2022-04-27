@@ -20,7 +20,7 @@
                                 <div class="row_borde row form-group">
 
                                     <div class="col-md-4">
-                                        <label class="col-sm-2 col-md-4 control-label" style="text-align:start;">Tipo Id:</label>
+                                        <label class="col-sm-2 col-md-6 control-label" style="text-align:start;">Tipo Id:</label>
 
                                         <label class="col-sm-2 col-md-6 control-label" style="text-align:start;">Cédula:</label>
                                     </div>
@@ -44,41 +44,37 @@
                                 <div class="row_borde row form-group">
 
                                     <div class="col-md-4">
-                                        <div class="col-sm-2 col-md-4">
-                                            <select class="form-control">
-                                                <option value="N">Ced</option>
-                                                <option value="E">Dim</option>
+                                        <div class="col-sm-2 col-md-6">
+                                            <select class="form-control" id="cmbTipo" disabled>
+                                                <option value="N">Nacional</option>
+                                                <option value="E">Extranjero</option>
                                             </select>
                                         </div>
 
                                         <div class="col-sm-2 col-md-6">
-                                            <input type="text" class="form-control" value="" />
-                                        </div>
-
-                                        <div class="col-sm-2 col-md-2">
-                                            <button class="btn btn-info" id="btnBuscar"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                            <input type="text" id="txtCedula" class="form-control" value="" />
                                         </div>
 
                                     </div>
 
                                     <div class="col-md-4">
                                         <div class="col-sm-2 col-md-6">
-                                            <input type="text" class="form-control" value="" />
+                                            <input type="text" id="txtNombre" class="form-control" value="" />
                                         </div>
 
                                         <div class="col-sm-2 col-md-6">
-                                            <input type="text" class="form-control" value="" />
+                                            <input type="text" id="txtApellido1" disabled="disabled" class="form-control" value="" />
                                         </div>
                                     </div>
 
                                     <div class="col-md-4">
 
                                         <div class="col-sm-2 col-md-6">
-                                            <input type="text" class="form-control" value="" />
+                                            <input type="text" id="txtApellido2" disabled="disabled" class="form-control" value="" />
                                         </div>
 
                                         <div class="col-sm-2 col-md-6">
-                                            <select class="form-control">
+                                            <select class="form-control" id="cmbSexo" disabled>
                                                 <option value="M">Masculino</option>
                                                 <option value="F">Femenino</option>
                                             </select>
@@ -119,28 +115,28 @@
                                     <div class="col-md-4">
 
                                         <div class="col-sm-2 col-md-8">
-                                            <input type="date" class=" form-control">
+                                            <input type="text" class=" form-control" id="dtFecha" disabled="disabled">
                                         </div>
 
                                         <div class="col-sm-2 col-md-4">
-                                            <input type="text" class="form-control" value="" />
+                                            <input type="text" class="form-control" id="txtEdad" disabled="disabled" value="" />
                                         </div>
 
                                     </div>
 
                                     <div class="col-md-4">
                                         <div class="col-sm-2 col-md-8">
-                                            <input type="text" class="form-control" value="" />
+                                            <input type="text" id="txtFacturar" class="form-control" value="" />
                                         </div>
 
                                         <div class="col-sm-2 col-md-4">
-                                            <input type="text" class="form-control" value="" />
+                                            <input type="text" id="txtNumFactura" disabled="disabled" class="form-control" value="" />
                                         </div>
                                     </div>
 
                                     <div class="col-md-4">
                                         <div class="col-sm-2 col-md-12">
-                                            <select class="form-control">
+                                            <select class="form-control" id="cmbMedicos">
                                             </select>
                                         </div>
 
@@ -295,110 +291,41 @@
                         <div class="form-group row">
 
                             @*<div class="col-sm-12 col-md-12">
-                                <div class="row_borde row form-group">
+                                    <div class="row_borde row form-group">
 
-                                    <div class="col-md-4">
-                                        <div class="row_borde row">
-                                            @Html.LabelFor(d => d.ObservacionGeneral, new { @class = "col-sm-2 col-md-4 control-label" })
-                                            <div class="col-sm-8 col-md-8">
-                                                @Html.TextAreaFor(d => d.ObservacionGeneral, new { @class = "form-control" })
-                                                @Html.ValidationMessage("Observación General", new { @class = "text-danger" })
+                                        <div class="col-md-4">
+                                            <div class="row_borde row">
+                                                @Html.LabelFor(d => d.ObservacionGeneral, new { @class = "col-sm-2 col-md-4 control-label" })
+                                                <div class="col-sm-8 col-md-8">
+                                                    @Html.TextAreaFor(d => d.ObservacionGeneral, new { @class = "form-control" })
+                                                    @Html.ValidationMessage("Observación General", new { @class = "text-danger" })
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="col-sm-12 col-md-12">
-                                <div class="row_borde row form-group">
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="row_borde row form-group">
 
-                                    <div class="col-md-4">
-                                        <div class="row_borde row">
-                                            @Html.LabelFor(d => d.ObservacionEspecifica, new { @class = "col-sm-2 col-md-4 control-label" })
-                                            <div class="col-sm-8 col-md-8">
-                                                @Html.TextAreaFor(d => d.ObservacionEspecifica, new { @class = "form-control" })
-                                                @Html.ValidationMessage("Observación Específica", new { @class = "text-danger" })
+                                        <div class="col-md-4">
+                                            <div class="row_borde row">
+                                                @Html.LabelFor(d => d.ObservacionEspecifica, new { @class = "col-sm-2 col-md-4 control-label" })
+                                                <div class="col-sm-8 col-md-8">
+                                                    @Html.TextAreaFor(d => d.ObservacionEspecifica, new { @class = "form-control" })
+                                                    @Html.ValidationMessage("Observación Específica", new { @class = "text-danger" })
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                </div>
-                            </div>*@
+                                    </div>
+                                </div>*@
                         </div>
 
                     </div>
                 </div>
             </div>
 
-
-        </div>
-    </div>
-
-    <div class="modal" id="modalPacientes" role="dialog" data-backdrop="static">
-        <div class="modal-dialog">
-
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Buscar Pacientes</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="form-group col-sm-12 col-md-2">
-                                    <label class="control-label" for="txtPacientes">Nombre:</label>
-                                </div>
-                                <div class="form-group col-sm-12 col-md-12">
-                                    <input type="text" class="form-control" id="txtPacientes" placeholder="Ingrese el nombre del paciente" maxlength="20" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mensaje" style="padding-left: 3%; font-weight: bold; font-style: oblique; display: block;">Enter en el campo nombre para realizar la búsqueda</div>
-
-                    </div>
-
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="container">
-                                    <div class="form-group row">
-                                        <div class="col-md-12 col-lg-12">
-                                            <table id="tablaPacientes" class="table table-bordered table-hover" style="width: 100%">
-                                                <colgroup>
-                                                    <col span="1" style="width: 10%;">
-                                                    <col span="1" style="width: 10%;">
-                                                    <col span="1" style="width: 10%;">
-                                                    <col span="1" style="width: 10%;">
-                                                </colgroup>
-                                                <thead class="thead-light">
-                                                    <tr>
-                                                        <th scope="col">Cédula</th>
-                                                        <th scope="col">Nombre</th>
-                                                        <th scope="col">1° Apellido</th>
-                                                        <th scope="col">2° Apellido</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody></tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-12 col-lg-12">
-                            <div class="mensaje" style="padding-left: 3%; font-weight: bold; font-style: oblique; display: block;">Clic en la fila que desea cargar</div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
 
         </div>
     </div>
@@ -406,19 +333,63 @@
 </div>
 
 @section scripts {
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
 
     <script>
+
         $(document).ready(function () {
 
-            $("#btnBuscar").on('click', function (e) {
-                e.preventDefault();
-                $('#modalPacientes').modal('show');
+            obtenerConsecutivoFactura();
+            obtenerMedicos();
+
+            $("#txtCedula").keypress(function (e) {
+                if (e.which == 13) {
+                    e.preventDefault();
+
+                    var fecha = new Date();
+                    var anio = fecha.getFullYear();
+
+                    $.getJSON('/Factura/BuscarPacienteCedula', { descripcion: $('#txtCedula').val() },
+                        function (data) {
+                            $("#cmbTipo").val(data.tipoId);
+
+                            $("#txtNombre").val(data.nombre);
+                            $("#txtApellido1").val(data.primerApellido);
+                            $("#txtApellido2").val(data.segundoApellido);
+                            $("#cmbSexo").val(data.sexo);
+
+                            $("#dtFecha").val(moment(data.fechaNacimiento, 'YYYY-MM-DD HH:mm:ss a').format('DD/MM/YYYY'));
+                            $("#txtEdad").val(anio - moment(data.fechaNacimiento, 'YYYY-MM-DD HH:mm:ss a').format('YYYY'));
+
+                            $("#txtFacturar").val(data.primerApellido + ' ' + data.nombre);
+
+                        });
+                }
             });
 
         });
+
+        function obtenerConsecutivoFactura() {
+
+            $.getJSON('/Factura/ObtenerConsecutivoFactura',
+                function (data) {
+                    $("#txtNumFactura").val(data);
+
+                });
+        }
+
+        function obtenerMedicos() {
+
+            $.getJSON('/Factura/ObtenerMedicos',
+                function (data) {
+                    
+                    $.each(data, function () {
+                        $("#cmbMedicos").append('<option value=' + this.id + '>' + this.nombre + '</option>');
+                    });
+                });
+        }
+
     </script>
 
 }

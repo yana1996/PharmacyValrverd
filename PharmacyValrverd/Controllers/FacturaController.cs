@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using PharmacyValrverd.Data;
 using PharmacyValrverd.Models;
 using PharmacyValrverd.Models.TableViewModels;
 using PharmacyValrverd.Models.ViewModels;
 using System.Collections.Generic;
+using System.Net;
 
 namespace PharmacyValrverd.Controllers
 {
@@ -25,6 +27,75 @@ namespace PharmacyValrverd.Controllers
             return View();
         }
 
+        public IActionResult BuscarPacienteCedula(string descripcion)
+        {
+
+            PacienteTableViewModel paciente = null;
+
+            paciente = con.ObtenerPacientesCedula(descripcion);
+
+            var settings = new JsonSerializerSettings()
+            {
+                Converters =
+        {
+            new StringEnumConverter()
+        }
+            };
+
+            return new ContentResult()
+            {
+                StatusCode = (int)HttpStatusCode.OK,
+                ContentType = "application/json",
+                Content = JsonConvert.SerializeObject(paciente, settings)
+            };
+
+        }
+
+        public IActionResult ObtenerConsecutivoFactura()
+        {
+
+            string numero = con.ObtenerConsecutivoFactura();
+
+            var settings = new JsonSerializerSettings()
+            {
+                Converters =
+        {
+            new StringEnumConverter()
+        }
+            };
+
+            return new ContentResult()
+            {
+                StatusCode = (int)HttpStatusCode.OK,
+                ContentType = "application/json",
+                Content = JsonConvert.SerializeObject(numero, settings)
+            };
+
+        }
+
+        public IActionResult ObtenerMedicos() 
+        {
+
+            List<MedicoTableViewModel> list = null;
+
+            list = con.ObtenerMedicos();
+
+            var settings = new JsonSerializerSettings()
+            {
+                Converters =
+        {
+            new StringEnumConverter()
+        }
+            };
+
+            return new ContentResult()
+            {
+                StatusCode = (int)HttpStatusCode.OK,
+                ContentType = "application/json",
+                Content = JsonConvert.SerializeObject(list, settings)
+            };
+
+        }
 
         // POST: FacturaController/Create
         [HttpPost]
@@ -49,8 +120,8 @@ namespace PharmacyValrverd.Controllers
 
             DetalleTableViewModel detalle = new DetalleTableViewModel
             {
-                idPerfilExamen = model.IdPerfilExamen,
-                //cantidad = 
+                idPerfilExamen = model.IdPerfilExamen
+
             };
 
             //string registrado = con.RegistrarPerfiles(perfil);
@@ -61,7 +132,7 @@ namespace PharmacyValrverd.Controllers
             //}
             //else
             //{
-                return View();
+            return View();
             //}
         }
 

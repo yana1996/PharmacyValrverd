@@ -56,26 +56,26 @@ namespace PharmacyValrverd.Data
             return listaProvincias;
         }
 
-		public List<CantonViewModel> ObtenerCantones(int provincia)
-		{
-			List<CantonViewModel> listaCantones = new List<CantonViewModel>();
+        public List<CantonViewModel> ObtenerCantones(int provincia)
+        {
+            List<CantonViewModel> listaCantones = new List<CantonViewModel>();
 
-			using (SqlConnection sql = new SqlConnection(conexion))
-			{
+            using (SqlConnection sql = new SqlConnection(conexion))
+            {
 
-				using (SqlCommand cmd = new SqlCommand("ObtenerCantones", sql))
-				{
+                using (SqlCommand cmd = new SqlCommand("ObtenerCantones", sql))
+                {
 
-					cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@provincia", provincia);
-					sql.Open();
+                    sql.Open();
 
-					SqlDataReader reader = cmd.ExecuteReader();
+                    SqlDataReader reader = cmd.ExecuteReader();
 
-					if (reader.HasRows)
-					{
-						while (reader.Read())
-						{
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
                             CantonViewModel cant = new CantonViewModel();
                             cant.CodigoCanton = reader.GetInt32(0);
                             cant.CodigoProvincia = reader.GetInt32(1);
@@ -83,14 +83,14 @@ namespace PharmacyValrverd.Data
                             cant.NombreCanton = reader.GetString(3);
 
                             listaCantones.Add(cant);
-						}
-					}
-					reader.Close();
-				}
-			}
+                        }
+                    }
+                    reader.Close();
+                }
+            }
 
-			return listaCantones;
-		}
+            return listaCantones;
+        }
 
         public List<DistritoViewModel> ObtenerDistritos(int canton)
         {
@@ -128,9 +128,9 @@ namespace PharmacyValrverd.Data
             return listaDistritos;
         }
 
-        public List<PacienteTableViewModel> ObtenerPacientes() 
+        public List<PacienteTableViewModel> ObtenerPacientes()
         {
-            List<PacienteTableViewModel> listaPacientes = new List<PacienteTableViewModel>(); 
+            List<PacienteTableViewModel> listaPacientes = new List<PacienteTableViewModel>();
 
             using (SqlConnection sql = new SqlConnection(conexion))
             {
@@ -213,6 +213,39 @@ namespace PharmacyValrverd.Data
             }
 
             return listaMedicos;
+        }
+
+        public string ObtenerConsecutivoFactura()
+        {
+            string numero = ""; 
+
+            using (SqlConnection sql = new SqlConnection(conexion))
+            {
+
+                using (SqlCommand cmd = new SqlCommand("ObtenerConsecutivoFactura", sql))
+                {
+
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    sql.Open();
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            numero = (reader.GetInt32(0) + 1).ToString();
+                        }
+                    }
+                    else
+                    {
+                        numero = "1";
+                    }
+                    reader.Close();
+                }
+            }
+
+            return numero;
         }
 
         /*LISTAS POR ID*/
@@ -302,6 +335,82 @@ namespace PharmacyValrverd.Data
             }
 
             return perfil;
+        }
+
+        /*LISTAS POR CEDULA / NOMBRE*/
+
+        public PacienteTableViewModel ObtenerPacientesCedula(string descripcion)
+        {
+            PacienteTableViewModel paciente = new PacienteTableViewModel();
+
+            try
+            {
+                using (SqlConnection sql = new SqlConnection(conexion))
+                {
+                    using (SqlCommand cmd = new SqlCommand("ObtenerPacientesCedula", sql))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.Add(new SqlParameter("@descripcion", descripcion));
+
+                        sql.Open();
+
+                        SqlDataReader reader = cmd.ExecuteReader();
+
+                        if (reader.HasRows)
+                        {
+
+                            while (reader.Read())
+                            {
+                                paciente = ArmarObjPaciente(reader);
+                            }
+                        }
+                        reader.Close();
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                
+            }
+            
+            return paciente;
+        }
+
+        public List<PacienteTableViewModel> ObtenerPacientesNombre(string nombre)
+        {
+            List<PacienteTableViewModel> listaPacientes = new List<PacienteTableViewModel>();
+
+            try
+            {
+                using (SqlConnection sql = new SqlConnection(conexion))
+                {
+                    using (SqlCommand cmd = new SqlCommand("ObtenerPacientesNombre", sql))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.Add(new SqlParameter("@descripcion", nombre));
+
+                        sql.Open();
+
+                        SqlDataReader reader = cmd.ExecuteReader();
+
+                        if (reader.HasRows)
+                        {
+
+                            while (reader.Read())
+                            {
+                                listaPacientes.Add(ArmarObjPaciente(reader));
+                            }
+                        }
+                        reader.Close();
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+
+            }
+
+            return listaPacientes;
         }
 
         /*ARMAR OBJETOS*/
@@ -423,7 +532,7 @@ namespace PharmacyValrverd.Data
         public string RegistrarPacientes(PacienteTableViewModel paciente)
         {
             var valor = "0";
-            
+
             try
             {
                 using (SqlConnection sql = new SqlConnection(conexion))
@@ -448,7 +557,7 @@ namespace PharmacyValrverd.Data
                         cmd.Parameters.Add(new SqlParameter("@canton", paciente.canton));
                         cmd.Parameters.Add(new SqlParameter("@distrito", paciente.distrito));
                         cmd.Parameters.Add(new SqlParameter("@direccion", paciente.direccion));
-                        
+
                         sql.Open();
 
                         SqlDataReader reader = cmd.ExecuteReader();
@@ -457,7 +566,7 @@ namespace PharmacyValrverd.Data
                         {
                             while (reader.Read())
                             {
-                               valor  = reader.GetInt32(0).ToString();
+                                valor = reader.GetInt32(0).ToString();
                             }
                         }
                         reader.Close();
@@ -558,11 +667,11 @@ namespace PharmacyValrverd.Data
             }
         }
 
-        public string RegistrarFactura(FacturaTableViewModel factura) 
+        public string RegistrarFactura(FacturaTableViewModel factura)
         {
             string valor;
 
-            var idFactura = 0; 
+            var idFactura = 0;
 
             SqlConnection con = new SqlConnection(conexion);
             con.Open();
@@ -599,7 +708,7 @@ namespace PharmacyValrverd.Data
                 foreach (var detalle in factura.detalle)
                 {
 
-                   using (SqlCommand cmdC = new SqlCommand("RegistrarFacturaDetalle", con))
+                    using (SqlCommand cmdC = new SqlCommand("RegistrarFacturaDetalle", con))
                     {
                         cmdC.CommandType = System.Data.CommandType.StoredProcedure;
                         cmdC.Transaction = sqlTan;
@@ -703,7 +812,7 @@ namespace PharmacyValrverd.Data
             }
         }
 
-        public string EliminarPerfil(int id) 
+        public string EliminarPerfil(int id)
         {
             var valor = "0";
 
@@ -741,7 +850,7 @@ namespace PharmacyValrverd.Data
         }
 
         /*MODIFICAR*/
-        public string ModificarPacientes(EditPacienteViewModel paciente) 
+        public string ModificarPacientes(EditPacienteViewModel paciente)
         {
             var valor = "0";
 
@@ -842,7 +951,7 @@ namespace PharmacyValrverd.Data
             }
         }
 
-        public string ModificarPerfil(EditPerfilExamenViewModel perfil) 
+        public string ModificarPerfil(EditPerfilExamenViewModel perfil)
         {
             var valor = "0";
 

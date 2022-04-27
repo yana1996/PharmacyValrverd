@@ -4,10 +4,10 @@
       "type": "secrets.user"
     },
     "mssql1": {
-      "secretStore": "LocalSecretsFile",
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/pharmacyvalverd/databases/BDPharmacyValverd",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/integralab/databases/DBPharmacy",
       "type": "mssql.azure",
-      "connectionId": "connectionStrings:defaultConnection"
+      "connectionId": "connectionStrings:defaultConnection",
+      "secretStore": "LocalSecretsFile"
     }
   }
 }
