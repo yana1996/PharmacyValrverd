@@ -376,9 +376,9 @@ namespace PharmacyValrverd.Data
             return paciente;
         }
 
-        public List<PacienteTableViewModel> ObtenerPacientesNombre(string nombre)
+        public PacienteTableViewModel ObtenerPacientesNombre(string nombre)
         {
-            List<PacienteTableViewModel> listaPacientes = new List<PacienteTableViewModel>();
+            PacienteTableViewModel paciente = new PacienteTableViewModel();
 
             try
             {
@@ -398,7 +398,7 @@ namespace PharmacyValrverd.Data
 
                             while (reader.Read())
                             {
-                                listaPacientes.Add(ArmarObjPaciente(reader));
+                                paciente = ArmarObjPaciente(reader);
                             }
                         }
                         reader.Close();
@@ -410,7 +410,7 @@ namespace PharmacyValrverd.Data
 
             }
 
-            return listaPacientes;
+            return paciente;
         }
 
         /*ARMAR OBJETOS*/
@@ -465,7 +465,7 @@ namespace PharmacyValrverd.Data
             perfiles.numero = reader["numero"].ToString();
             perfiles.tipo = reader["tipo"].ToString();
             perfiles.descripcion = reader["descripcion"].ToString();
-            perfiles.precio = (decimal)reader["precio"];
+            perfiles.porcentaje = (decimal)reader["precio"];
 
             return perfiles;
         }
@@ -522,7 +522,7 @@ namespace PharmacyValrverd.Data
             perfiles.Numero = reader["numero"].ToString();
             perfiles.Tipo = reader["tipo"].ToString();
             perfiles.Descripcion = reader["descripcion"].ToString();
-            perfiles.Precio = (decimal)reader["precio"];
+            perfiles.Porcentaje = (decimal)reader["precio"];
 
             return perfiles;
         }
@@ -642,7 +642,7 @@ namespace PharmacyValrverd.Data
                         cmd.Parameters.Add(new SqlParameter("@numero", perfil.numero));
                         cmd.Parameters.Add(new SqlParameter("@tipo", perfil.tipo));
                         cmd.Parameters.Add(new SqlParameter("@descripcion", perfil.descripcion));
-                        cmd.Parameters.Add(new SqlParameter("@precio", perfil.precio));
+                        cmd.Parameters.Add(new SqlParameter("@precio", perfil.porcentaje));
                         sql.Open();
 
                         SqlDataReader reader = cmd.ExecuteReader();
@@ -966,7 +966,7 @@ namespace PharmacyValrverd.Data
                         cmd.Parameters.Add(new SqlParameter("@numero", perfil.Numero));
                         cmd.Parameters.Add(new SqlParameter("@tipo", perfil.Tipo));
                         cmd.Parameters.Add(new SqlParameter("@descripcion", perfil.Descripcion));
-                        cmd.Parameters.Add(new SqlParameter("@precio", perfil.Precio));
+                        cmd.Parameters.Add(new SqlParameter("@precio", perfil.Porcentaje));
 
                         sql.Open();
 

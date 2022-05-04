@@ -11,6 +11,6 @@ namespace PharmacyValrverd.Models.TableViewModels
         public string numero { get; set; }
         public string tipo { get; set; }
         public string descripcion { get; set; }
-        public Decimal precio { get; set; } 
+        public Decimal porcentaje { get; set; }  
     }
 }

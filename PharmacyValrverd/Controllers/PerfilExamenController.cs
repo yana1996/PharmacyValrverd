@@ -49,7 +49,7 @@ namespace PharmacyValrverd.Controllers
                 numero = model.Numero,
                 tipo = model.Tipo,
                 descripcion = model.Descripcion,
-                precio = model.Precio
+                porcentaje = model.Porcentaje
             };
 
             string registrado = con.RegistrarPerfiles(perfil);
@@ -76,7 +76,7 @@ namespace PharmacyValrverd.Controllers
             model.Numero = perfil.Numero;
             model.Tipo = perfil.Tipo;
             model.Descripcion = perfil.Descripcion;
-            model.Precio = perfil.Precio;
+            model.Porcentaje = perfil.Porcentaje;
 
             return View(model);
         }
@@ -97,7 +97,7 @@ namespace PharmacyValrverd.Controllers
                 Numero = model.Numero,
                 Tipo = model.Tipo,
                 Descripcion = model.Descripcion,
-                Precio = model.Precio
+                Porcentaje = model.Porcentaje
             };
 
             string modificado = con.ModificarPerfil(perfil);

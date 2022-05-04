@@ -40,7 +40,7 @@
                         <th scope="col">Número</th>
                         <th scope="col">Tipo</th>
                         <th scope="col">Descripción</th>
-                        <th scope="col">Precio</th>
+                        <th scope="col">% Real</th>
                         <th scope="col">Editar</th>
                         <th scope="col">Eliminar</th>
                     </tr>
@@ -52,7 +52,7 @@
                         <td class="align-middle">@perfil.numero</td>
                         <td class="align-middle">@perfil.tipo</td>
                         <td class="align-middle">@perfil.descripcion</td>
-                        <td class="align-middle">@perfil.precio</td>
+                        <td class="align-middle">@perfil.porcentaje</td>
                         <td class="align-middle text-center">
                             <button type="button" onclick="document.location.href='@Url.Content("~/PerfilExamen/Edit/"+@perfil.id)'" value="Editar" class="btn btn-info">
                                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>

@@ -51,6 +51,30 @@ namespace PharmacyValrverd.Controllers
 
         }
 
+        public IActionResult BuscarPacienteNombre(string descripcion)
+        {
+
+            PacienteTableViewModel paciente = null;
+
+            paciente = con.ObtenerPacientesNombre(descripcion);
+
+            var settings = new JsonSerializerSettings()
+            {
+                Converters =
+        {
+            new StringEnumConverter()
+        }
+            };
+
+            return new ContentResult()
+            {
+                StatusCode = (int)HttpStatusCode.OK,
+                ContentType = "application/json",
+                Content = JsonConvert.SerializeObject(paciente, settings)
+            };
+
+        }
+
         public IActionResult ObtenerConsecutivoFactura()
         {
 
@@ -79,6 +103,30 @@ namespace PharmacyValrverd.Controllers
             List<MedicoTableViewModel> list = null;
 
             list = con.ObtenerMedicos();
+
+            var settings = new JsonSerializerSettings()
+            {
+                Converters =
+        {
+            new StringEnumConverter()
+        }
+            };
+
+            return new ContentResult()
+            {
+                StatusCode = (int)HttpStatusCode.OK,
+                ContentType = "application/json",
+                Content = JsonConvert.SerializeObject(list, settings)
+            };
+
+        }
+
+        public IActionResult ObtenerPerfilesExamen()  
+        {
+
+            List<PerfilExamenTableViewModel> list = null;
+
+            list = con.ObtenerPerfiles();
 
             var settings = new JsonSerializerSettings()
             {

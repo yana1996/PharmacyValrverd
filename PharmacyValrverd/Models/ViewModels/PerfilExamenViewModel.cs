@@ -24,8 +24,8 @@ namespace PharmacyValrverd.Models.ViewModels
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "El  precio no puede estar vacio.")]
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Precio:")]
-        public Decimal Precio { get; set; } 
+        [Display(Name = "Porcentaje:")]
+        public Decimal Porcentaje { get; set; }  
     }
 
     public class EditPerfilExamenViewModel
@@ -48,7 +48,7 @@ namespace PharmacyValrverd.Models.ViewModels
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "El  precio no puede estar vacio.")]
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Precio:")]
-        public Decimal Precio { get; set; }
+        [Display(Name = "Porcentaje:")]
+        public Decimal Porcentaje { get; set; }
     }
 }
